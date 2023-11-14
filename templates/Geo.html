@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Queens Campus Map</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/location">Plot your route</a>
+    </div>
+
+    <div class="container" style="padding-top: 20px;">
+        <h1>Options for Map</h1>
+        <p id="geo"></p>
+    </div>
+
+    <div class="container" style="padding-top: 20px;">
+        <label class="form-check-label">Use live location : </label><input class="form-check-input" type="checkbox" id="Check" onclick="getLiveLocation()"><br>
+    </div>
+
+<!--Dropdown box OR live location for location-->
+    <div class="container" style="padding-top: 20px;">
+        <form method="POST" action="/set_location">
+            <div class="form-group">
+                <label for="location-select">Or select your location:</label>
+                <select name="location" class="form-control" id="location-select">
+                    {% for entry in locations %}
+                        <option value="{{ entry[0][0] }}">{{ entry[0][0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+<!--Dropdown box for destination-->
+    <div class="container" style="padding-top: 20px;">
+        <form method="POST" action="/set_destination">
+            <div class="form-group">
+                <label for="destination-select">Select your destination:</label>
+                <select name="destination" class="form-control" id="destination-select">
+                    {% for entry in locations %}
+                        <option value="{{ entry[0][0] }}">{{ entry[0][0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+<!--Confirm choices for the map-->
+    <div class="container" style="padding-top: 20px;">
+        <button class="btn btn-primary" type="button" onclick="confirm()">Confirm choices</button>
+    </div>
+
+    <script>
+
+        const x = document.getElementById("geo");
+        function getLiveLocation() {
+            //Get the checkbox
+            var checkBox = document.getElementById("Check");
+
+            //If the checkbox is checked, get geo-location
+            if (checkBox.checked == true){
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.watchPosition(function (position) {
+
+                        //Create a JSON object with the location data
+                        const locationData = {
+                            location: {
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude
+                            }
+                        };
+
+                        //Send a POST request to your Flask server to save the location data
+                        fetch('/get_location', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(locationData)
+                        })
+                        .then(response => response.json())
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }, showError);
+                    //Tell user they cant use live location as their browser cant support it
+                } else {
+                    x.innerHTML = "Live location is not supported by this browser.";
+                //If checkbox is not checked, tell user
+                }} else{
+                    x.innerHTML = "Live location is disabelled."
+                }
+        }
+        //Error messages
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred."
+                    break;
+            }
+        }
+        
+        function confirm() {
+            var useLiveLocation = document.getElementById('Check').checked;
+            if (useLiveLocation) {
+                //If live location is selected, submit the destination form only
+                document.getElementById('destination-select').form.submit();
+            } else {
+                //If live location is not selected, submit the location form first
+                document.getElementById('location-select').form.submit();
+                //Submit the destination form after a slight delay
+                setTimeout(function() {
+                    document.getElementById('destination-select').form.submit();
+                }, 500);
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>

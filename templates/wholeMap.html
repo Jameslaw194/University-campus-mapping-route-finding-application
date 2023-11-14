@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="static/styles.css"/>
+<div class="topnav">
+  <a href="/">Home</a>
+  <a href="/location">Plot your route</a>
+</div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a97d4053b4535520e341689b049bd505 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_a97d4053b4535520e341689b049bd505" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a97d4053b4535520e341689b049bd505 = L.map(
+                "map_a97d4053b4535520e341689b049bd505",
+                {
+                    center: [54.58319268940053, -5.936868755846738],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7cf2ba9679ef1a394503eefd8be90913 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+            var marker_29bd809a3c9dc9cd978356e2cef72c74 = L.marker(
+                [54.58437403687632, -5.933474677076396],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_93c8560e34fe129996b6cbdfefc34836 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a5c26536cbb46dca16aa01268e1bf8c2 = $(`<div id="html_a5c26536cbb46dca16aa01268e1bf8c2" style="width: 100.0%; height: 100.0%;">Academic and Student Affairs</div>`)[0];
+                popup_93c8560e34fe129996b6cbdfefc34836.setContent(html_a5c26536cbb46dca16aa01268e1bf8c2);
+            
+        
+
+        marker_29bd809a3c9dc9cd978356e2cef72c74.bindPopup(popup_93c8560e34fe129996b6cbdfefc34836)
+        ;
+
+        
+    
+    
+            var marker_cd8129ecfd9d46765dff156866c7b218 = L.marker(
+                [54.58452736772177, -5.93327688374742],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_5acc6ff8aee125e1d51a8744a1c1fc2d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_070815d997cf3e3901fe7125bfb30f73 = $(`<div id="html_070815d997cf3e3901fe7125bfb30f73" style="width: 100.0%; height: 100.0%;">Administration Building</div>`)[0];
+                popup_5acc6ff8aee125e1d51a8744a1c1fc2d.setContent(html_070815d997cf3e3901fe7125bfb30f73);
+            
+        
+
+        marker_cd8129ecfd9d46765dff156866c7b218.bindPopup(popup_5acc6ff8aee125e1d51a8744a1c1fc2d)
+        ;
+
+        
+    
+    
+            var marker_a07d5f68e6a033627c2aaed4b7e61387 = L.marker(
+                [54.5800702577698, -5.9354322491684846],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_2be72c989d5a117310f2e46f28c7fc62 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7e8ccc21c87f6ef4827e5b62a9c5bab6 = $(`<div id="html_7e8ccc21c87f6ef4827e5b62a9c5bab6" style="width: 100.0%; height: 100.0%;">Ashby Building</div>`)[0];
+                popup_2be72c989d5a117310f2e46f28c7fc62.setContent(html_7e8ccc21c87f6ef4827e5b62a9c5bab6);
+            
+        
+
+        marker_a07d5f68e6a033627c2aaed4b7e61387.bindPopup(popup_2be72c989d5a117310f2e46f28c7fc62)
+        ;
+
+        
+    
+    
+            var marker_ee94dd2826393721e2446dde28bcd73f = L.marker(
+                [54.57896703662099, -5.936502371659701],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_f4c90dbef75de950553858142db8ecaa = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_45798afa1a5b4fe9f4387ea88ac6a152 = $(`<div id="html_45798afa1a5b4fe9f4387ea88ac6a152" style="width: 100.0%; height: 100.0%;">Biological Sciences</div>`)[0];
+                popup_f4c90dbef75de950553858142db8ecaa.setContent(html_45798afa1a5b4fe9f4387ea88ac6a152);
+            
+        
+
+        marker_ee94dd2826393721e2446dde28bcd73f.bindPopup(popup_f4c90dbef75de950553858142db8ecaa)
+        ;
+
+        
+    
+    
+            var marker_a4dac6969643b5506fd781237a20efce = L.marker(
+                [54.584822375588544, -5.935087425538025],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_15667a2ccb992b67de97cc8d191d0fbe = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_27ab0184bb6f45ed25c97d2699598373 = $(`<div id="html_27ab0184bb6f45ed25c97d2699598373" style="width: 100.0%; height: 100.0%;">Canada Room/Council Chamber</div>`)[0];
+                popup_15667a2ccb992b67de97cc8d191d0fbe.setContent(html_27ab0184bb6f45ed25c97d2699598373);
+            
+        
+
+        marker_a4dac6969643b5506fd781237a20efce.bindPopup(popup_15667a2ccb992b67de97cc8d191d0fbe)
+        ;
+
+        
+    
+    
+            var marker_75b97494ea9cab4d2e93bb2167d073bb = L.marker(
+                [54.58456772091219, -5.937142952814181],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_7826cafc4e658a37fadba0bcbff3fc03 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_905b3d784b924a474e63bdd60525bf51 = $(`<div id="html_905b3d784b924a474e63bdd60525bf51" style="width: 100.0%; height: 100.0%;">Careers, Employability and Skills</div>`)[0];
+                popup_7826cafc4e658a37fadba0bcbff3fc03.setContent(html_905b3d784b924a474e63bdd60525bf51);
+            
+        
+
+        marker_75b97494ea9cab4d2e93bb2167d073bb.bindPopup(popup_7826cafc4e658a37fadba0bcbff3fc03)
+        ;
+
+        
+    
+    
+            var marker_22c5108c254d32b48ee9d2a59efb3868 = L.marker(
+                [54.585997517261205, -5.944159030516546],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_7c44269efee37730bfad4955afd8bddc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_780164b8b097d3cc08794b35d80ded0b = $(`<div id="html_780164b8b097d3cc08794b35d80ded0b" style="width: 100.0%; height: 100.0%;">Centre for Cancer Research and Cell Biology (CCRCB)</div>`)[0];
+                popup_7c44269efee37730bfad4955afd8bddc.setContent(html_780164b8b097d3cc08794b35d80ded0b);
+            
+        
+
+        marker_22c5108c254d32b48ee9d2a59efb3868.bindPopup(popup_7c44269efee37730bfad4955afd8bddc)
+        ;
+
+        
+    
+    
+            var marker_5636a9ae58815786a3ba43c5e14a28ac = L.marker(
+                [54.58578106001793, -5.939199165117572],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_f62eef1bfc288ffb7bd344fe99c0df94 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1d7360aa458c1c40993c17ffe1a4236f = $(`<div id="html_1d7360aa458c1c40993c17ffe1a4236f" style="width: 100.0%; height: 100.0%;">Chrono Centre</div>`)[0];
+                popup_f62eef1bfc288ffb7bd344fe99c0df94.setContent(html_1d7360aa458c1c40993c17ffe1a4236f);
+            
+        
+
+        marker_5636a9ae58815786a3ba43c5e14a28ac.bindPopup(popup_f62eef1bfc288ffb7bd344fe99c0df94)
+        ;
+
+        
+    
+    
+            var marker_46e30e8dd7e6d5e9449a82999160a797 = L.marker(
+                [54.58772367636317, -5.941943664495399],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_e769619696b794c9b2ae29ae42ff6aa1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5704d58606a97875d36566b17e0524b2 = $(`<div id="html_5704d58606a97875d36566b17e0524b2" style="width: 100.0%; height: 100.0%;">Clinical Research Facility</div>`)[0];
+                popup_e769619696b794c9b2ae29ae42ff6aa1.setContent(html_5704d58606a97875d36566b17e0524b2);
+            
+        
+
+        marker_46e30e8dd7e6d5e9449a82999160a797.bindPopup(popup_e769619696b794c9b2ae29ae42ff6aa1)
+        ;
+
+        
+    
+    
+            var marker_6d28edb8478a75322e3074535e579be9 = L.marker(
+                [54.58169894475783, -5.9376482843028935],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_485c832bad5e0150f61a0a64aa05eb37 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_718f4758cdfce5693e60c2422b7060f8 = $(`<div id="html_718f4758cdfce5693e60c2422b7060f8" style="width: 100.0%; height: 100.0%;">Computer Science </div>`)[0];
+                popup_485c832bad5e0150f61a0a64aa05eb37.setContent(html_718f4758cdfce5693e60c2422b7060f8);
+            
+        
+
+        marker_6d28edb8478a75322e3074535e579be9.bindPopup(popup_485c832bad5e0150f61a0a64aa05eb37)
+        ;
+
+        
+    
+    
+            var marker_2221d7d6ad5194067ecb8dd21f7ac5fe = L.marker(
+                [54.58456772091219, -5.937142952814181],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_f4f063a88032d39a66ca8bdd9c7de0e1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_56ec89b19c9c43af667a5a0da177d03e = $(`<div id="html_56ec89b19c9c43af667a5a0da177d03e" style="width: 100.0%; height: 100.0%;">Student Wellbeing Service</div>`)[0];
+                popup_f4f063a88032d39a66ca8bdd9c7de0e1.setContent(html_56ec89b19c9c43af667a5a0da177d03e);
+            
+        
+
+        marker_2221d7d6ad5194067ecb8dd21f7ac5fe.bindPopup(popup_f4f063a88032d39a66ca8bdd9c7de0e1)
+        ;
+
+        
+    
+    
+            var marker_1a2ee966e19dd913e39c8947f38940b1 = L.marker(
+                [54.58363280129188, -5.931360528654096],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_4f39fd31461b257188e75b749bc8a516 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_84394c9b9be1e69a798cb316561ac95d = $(`<div id="html_84394c9b9be1e69a798cb316561ac95d" style="width: 100.0%; height: 100.0%;">David Bates Building</div>`)[0];
+                popup_4f39fd31461b257188e75b749bc8a516.setContent(html_84394c9b9be1e69a798cb316561ac95d);
+            
+        
+
+        marker_1a2ee966e19dd913e39c8947f38940b1.bindPopup(popup_4f39fd31461b257188e75b749bc8a516)
+        ;
+
+        
+    
+    
+            var marker_f2b11006b992781b6749b9b01b991aaf = L.marker(
+                [54.58117060439069, -5.93602525318017],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_81cba5c82801d1edc91637b8ee6f60b6 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ea5edc2ab0872df944abc7e52281768c = $(`<div id="html_ea5edc2ab0872df944abc7e52281768c" style="width: 100.0%; height: 100.0%;">David Keir Building</div>`)[0];
+                popup_81cba5c82801d1edc91637b8ee6f60b6.setContent(html_ea5edc2ab0872df944abc7e52281768c);
+            
+        
+
+        marker_f2b11006b992781b6749b9b01b991aaf.bindPopup(popup_81cba5c82801d1edc91637b8ee6f60b6)
+        ;
+
+        
+    
+    
+            var marker_5485549455d2556db6fb2254c6f3ae58 = L.marker(
+                [54.584677822431985, -5.935106200999247],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_88916f44cee5a0811938fd5ce972801d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3b799602d94dad94f59962e28b2380c6 = $(`<div id="html_3b799602d94dad94f59962e28b2380c6" style="width: 100.0%; height: 100.0%;">Development and Alumni Relations</div>`)[0];
+                popup_88916f44cee5a0811938fd5ce972801d.setContent(html_3b799602d94dad94f59962e28b2380c6);
+            
+        
+
+        marker_5485549455d2556db6fb2254c6f3ae58.bindPopup(popup_88916f44cee5a0811938fd5ce972801d)
+        ;
+
+        
+    
+    
+            var marker_5c544e5e9139d06565e741ea370aeba2 = L.marker(
+                [54.58456772091219, -5.937142952814181],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_010d8c5c6ddf8d4d6eb923c7d8b200fc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fe97cad68265145761fa6fa91f7e2ced = $(`<div id="html_fe97cad68265145761fa6fa91f7e2ced" style="width: 100.0%; height: 100.0%;">Disability Services</div>`)[0];
+                popup_010d8c5c6ddf8d4d6eb923c7d8b200fc.setContent(html_fe97cad68265145761fa6fa91f7e2ced);
+            
+        
+
+        marker_5c544e5e9139d06565e741ea370aeba2.bindPopup(popup_010d8c5c6ddf8d4d6eb923c7d8b200fc)
+        ;
+
+        
+    
+    
+            var marker_19dd8d7f0c1f8741d5d53b3c85032065 = L.marker(
+                [54.58578801013879, -5.9333177531581285],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_8c673fb6b68839dfc0a55f8c38360b3f = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8b8d5ba815dbbd0f603b0657a14d6aeb = $(`<div id="html_8b8d5ba815dbbd0f603b0657a14d6aeb" style="width: 100.0%; height: 100.0%;">Drama and Film Centre at Queens</div>`)[0];
+                popup_8c673fb6b68839dfc0a55f8c38360b3f.setContent(html_8b8d5ba815dbbd0f603b0657a14d6aeb);
+            
+        
+
+        marker_19dd8d7f0c1f8741d5d53b3c85032065.bindPopup(popup_8c673fb6b68839dfc0a55f8c38360b3f)
+        ;
+
+        
+    
+    
+            var marker_b2f8431bc8254d67dc8e0f51696ab3e1 = L.marker(
+                [54.5851390128181, -5.942360611702178],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_23d2c7dadd7e8bb48792959400acf171 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d02659e91ba96b41ba4e2fc57180dca2 = $(`<div id="html_d02659e91ba96b41ba4e2fc57180dca2" style="width: 100.0%; height: 100.0%;">Dunluce Health Centre</div>`)[0];
+                popup_23d2c7dadd7e8bb48792959400acf171.setContent(html_d02659e91ba96b41ba4e2fc57180dca2);
+            
+        
+
+        marker_b2f8431bc8254d67dc8e0f51696ab3e1.bindPopup(popup_23d2c7dadd7e8bb48792959400acf171)
+        ;
+
+        
+    
+    
+            var marker_1ceea78b187a4887069a3d3100626101 = L.marker(
+                [54.57602006308282, -5.939878621554936],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_36a4924314a4a53652fca092cd2cc325 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_749a5e99d3b746710b7c6978ba7163bc = $(`<div id="html_749a5e99d3b746710b7c6978ba7163bc" style="width: 100.0%; height: 100.0%;">Elms Village</div>`)[0];
+                popup_36a4924314a4a53652fca092cd2cc325.setContent(html_749a5e99d3b746710b7c6978ba7163bc);
+            
+        
+
+        marker_1ceea78b187a4887069a3d3100626101.bindPopup(popup_36a4924314a4a53652fca092cd2cc325)
+        ;
+
+        
+    
+    
+            var marker_3ed621c483349aa6d65c1eb4999a0ecd = L.marker(
+                [54.585283680679254, -5.939202488597943],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_1e7ae9acb39f1f9bdcfcc2054d9c63b8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_41f02a1a552a5e2df031bda589ec1dbe = $(`<div id="html_41f02a1a552a5e2df031bda589ec1dbe" style="width: 100.0%; height: 100.0%;">Elmwood Building</div>`)[0];
+                popup_1e7ae9acb39f1f9bdcfcc2054d9c63b8.setContent(html_41f02a1a552a5e2df031bda589ec1dbe);
+            
+        
+
+        marker_3ed621c483349aa6d65c1eb4999a0ecd.bindPopup(popup_1e7ae9acb39f1f9bdcfcc2054d9c63b8)
+        ;
+
+        
+    
+    
+            var marker_84ca5a76442dbdf0d3588c5cbf21e5cd = L.marker(
+                [54.58420125932277, -5.937357811743834],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_a43ea49d534803d197415d717933464b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4848a179e53fbb826ee8ecb9d8510763 = $(`<div id="html_4848a179e53fbb826ee8ecb9d8510763" style="width: 100.0%; height: 100.0%;">Elmwood Hall</div>`)[0];
+                popup_a43ea49d534803d197415d717933464b.setContent(html_4848a179e53fbb826ee8ecb9d8510763);
+            
+        
+
+        marker_84ca5a76442dbdf0d3588c5cbf21e5cd.bindPopup(popup_a43ea49d534803d197415d717933464b)
+        ;
+
+        
+    
+    
+            var marker_8190c6453d3ffe16a09ac5c4ca2f6cfc = L.marker(
+                [54.58438060650743, -5.933471722012167],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_f76b4c4f44f1f8945c96e97a251199a7 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_465bf9ca52766f343424ba8fb60939f2 = $(`<div id="html_465bf9ca52766f343424ba8fb60939f2" style="width: 100.0%; height: 100.0%;">Estates</div>`)[0];
+                popup_f76b4c4f44f1f8945c96e97a251199a7.setContent(html_465bf9ca52766f343424ba8fb60939f2);
+            
+        
+
+        marker_8190c6453d3ffe16a09ac5c4ca2f6cfc.bindPopup(popup_f76b4c4f44f1f8945c96e97a251199a7)
+        ;
+
+        
+    
+    
+            var marker_e444495236fa4b68b4de65842c12a880 = L.marker(
+                [54.58438060650743, -5.933471722012167],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_64b436813b5135e4b38af9ca6fccf05d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_157cc510872e99ab41443099931ffb07 = $(`<div id="html_157cc510872e99ab41443099931ffb07" style="width: 100.0%; height: 100.0%;">Finance</div>`)[0];
+                popup_64b436813b5135e4b38af9ca6fccf05d.setContent(html_157cc510872e99ab41443099931ffb07);
+            
+        
+
+        marker_e444495236fa4b68b4de65842c12a880.bindPopup(popup_64b436813b5135e4b38af9ca6fccf05d)
+        ;
+
+        
+    
+    
+            var marker_5c4c3ea6d9446c669d0b8391374549b5 = L.marker(
+                [54.58514430450694, -5.93473703268367],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_d53f7144a647c4e69663e26e7f000c63 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_67f1162bf47eefb4e341513f0cfcb583 = $(`<div id="html_67f1162bf47eefb4e341513f0cfcb583" style="width: 100.0%; height: 100.0%;">Graduate School</div>`)[0];
+                popup_d53f7144a647c4e69663e26e7f000c63.setContent(html_67f1162bf47eefb4e341513f0cfcb583);
+            
+        
+
+        marker_5c4c3ea6d9446c669d0b8391374549b5.bindPopup(popup_d53f7144a647c4e69663e26e7f000c63)
+        ;
+
+        
+    
+    
+            var marker_bc5a4cd570d1be71fd4046249536b429 = L.marker(
+                [54.58454881219248, -5.935079378911786],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_cb299a1b5a1404ef912fae9dfdf476b2 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_90d891d324b89e4ab4ddb3ec5fc4891b = $(`<div id="html_90d891d324b89e4ab4ddb3ec5fc4891b" style="width: 100.0%; height: 100.0%;">Great Hall</div>`)[0];
+                popup_cb299a1b5a1404ef912fae9dfdf476b2.setContent(html_90d891d324b89e4ab4ddb3ec5fc4891b);
+            
+        
+
+        marker_bc5a4cd570d1be71fd4046249536b429.bindPopup(popup_cb299a1b5a1404ef912fae9dfdf476b2)
+        ;
+
+        
+    
+    
+            var marker_48ce7d4e2e92b796f0553dcf7c6ba861 = L.marker(
+                [54.58505428316491, -5.933036537710994],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_afca756c54f49d80707b1c4064c1b0db = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_ba58c149d64d2d9d163347c6b1322805 = $(`<div id="html_ba58c149d64d2d9d163347c6b1322805" style="width: 100.0%; height: 100.0%;">Harty Room</div>`)[0];
+                popup_afca756c54f49d80707b1c4064c1b0db.setContent(html_ba58c149d64d2d9d163347c6b1322805);
+            
+        
+
+        marker_48ce7d4e2e92b796f0553dcf7c6ba861.bindPopup(popup_afca756c54f49d80707b1c4064c1b0db)
+        ;
+
+        
+    
+    
+            var marker_3b319ecfe48aba336943230968cdc2bb = L.marker(
+                [54.58663017320947, -5.946543118478483],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_78cb00d0bb518958960a85bab3c5f1d9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f009f49b0a25b6cf9e63482401702d1b = $(`<div id="html_f009f49b0a25b6cf9e63482401702d1b" style="width: 100.0%; height: 100.0%;">Health Sciences Building</div>`)[0];
+                popup_78cb00d0bb518958960a85bab3c5f1d9.setContent(html_f009f49b0a25b6cf9e63482401702d1b);
+            
+        
+
+        marker_3b319ecfe48aba336943230968cdc2bb.bindPopup(popup_78cb00d0bb518958960a85bab3c5f1d9)
+        ;
+
+        
+    
+    
+            var marker_0d23a3f646e562398896d8939063331f = L.marker(
+                [54.58438060650743, -5.933471722012167],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_01f2ec6653dd65947a58bfc8eed26032 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8fc3e181568794c047033d0c519d7741 = $(`<div id="html_8fc3e181568794c047033d0c519d7741" style="width: 100.0%; height: 100.0%;">Human Resources</div>`)[0];
+                popup_01f2ec6653dd65947a58bfc8eed26032.setContent(html_8fc3e181568794c047033d0c519d7741);
+            
+        
+
+        marker_0d23a3f646e562398896d8939063331f.bindPopup(popup_01f2ec6653dd65947a58bfc8eed26032)
+        ;
+
+        
+    
+    
+            var marker_f9ec4d8d5e578ea27a657c1d62e44ed0 = L.marker(
+                [54.58382416994067, -5.932105721548607],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_1cfd1c7b19a7a7b16250319e1fbe8f47 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_adcd6a867c0d55d1a6c6244898afe84a = $(`<div id="html_adcd6a867c0d55d1a6c6244898afe84a" style="width: 100.0%; height: 100.0%;">Information Services</div>`)[0];
+                popup_1cfd1c7b19a7a7b16250319e1fbe8f47.setContent(html_adcd6a867c0d55d1a6c6244898afe84a);
+            
+        
+
+        marker_f9ec4d8d5e578ea27a657c1d62e44ed0.bindPopup(popup_1cfd1c7b19a7a7b16250319e1fbe8f47)
+        ;
+
+        
+    
+    
+            var marker_0886a719d8162c115a655afeac47c282 = L.marker(
+                [54.579023995281226, -5.9377396107889195],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_800b60fb6e5fafa0556d729c4dc0e860 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_188a2276630c33d7ab08e41e8844fa47 = $(`<div id="html_188a2276630c33d7ab08e41e8844fa47" style="width: 100.0%; height: 100.0%;">Institute of Professional Legal Studies (IPLS)</div>`)[0];
+                popup_800b60fb6e5fafa0556d729c4dc0e860.setContent(html_188a2276630c33d7ab08e41e8844fa47);
+            
+        
+
+        marker_0886a719d8162c115a655afeac47c282.bindPopup(popup_800b60fb6e5fafa0556d729c4dc0e860)
+        ;
+
+        
+    
+    
+            var marker_db089b3d70a6f6b1ebf383bada1f0bdd = L.marker(
+                [54.584436899364654, -5.935141069712947],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_e4813bd9813a362724590225077009b1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_677ac4d18550cbef953bf6937cf27cbd = $(`<div id="html_677ac4d18550cbef953bf6937cf27cbd" style="width: 100.0%; height: 100.0%;">International Office</div>`)[0];
+                popup_e4813bd9813a362724590225077009b1.setContent(html_677ac4d18550cbef953bf6937cf27cbd);
+            
+        
+
+        marker_db089b3d70a6f6b1ebf383bada1f0bdd.bindPopup(popup_e4813bd9813a362724590225077009b1)
+        ;
+
+        
+    
+    
+            var marker_9c872084a7ebc66de1ff826243fd19b6 = L.marker(
+                [54.57930335140277, -5.93808936622602],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_b497e8a3deda24be8dc00d1d0a8eeefd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_34975c0d2853a05e72d46027c3ba86ca = $(`<div id="html_34975c0d2853a05e72d46027c3ba86ca" style="width: 100.0%; height: 100.0%;">INTO Queens</div>`)[0];
+                popup_b497e8a3deda24be8dc00d1d0a8eeefd.setContent(html_34975c0d2853a05e72d46027c3ba86ca);
+            
+        
+
+        marker_9c872084a7ebc66de1ff826243fd19b6.bindPopup(popup_b497e8a3deda24be8dc00d1d0a8eeefd)
+        ;
+
+        
+    
+    
+            var marker_e6a227ba7929e1ce54978cb630436422 = L.marker(
+                [54.58448404740997, -5.935159301057353],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_fda6e9d441e4976f3150770ecdcfaa72 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_54c42ed6b52e652bece09aea00cdd694 = $(`<div id="html_54c42ed6b52e652bece09aea00cdd694" style="width: 100.0%; height: 100.0%;">Lanyon Building</div>`)[0];
+                popup_fda6e9d441e4976f3150770ecdcfaa72.setContent(html_54c42ed6b52e652bece09aea00cdd694);
+            
+        
+
+        marker_e6a227ba7929e1ce54978cb630436422.bindPopup(popup_fda6e9d441e4976f3150770ecdcfaa72)
+        ;
+
+        
+    
+    
+            var marker_8a634558ef161a87da0946c17632cf35 = L.marker(
+                [54.584731476918904, -5.934128091650716],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_859276b8cd0ea85b722e8fabc98ecaa0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9867662e3034201bc4e9bf2c671594db = $(`<div id="html_9867662e3034201bc4e9bf2c671594db" style="width: 100.0%; height: 100.0%;">Main Site Tower</div>`)[0];
+                popup_859276b8cd0ea85b722e8fabc98ecaa0.setContent(html_9867662e3034201bc4e9bf2c671594db);
+            
+        
+
+        marker_8a634558ef161a87da0946c17632cf35.bindPopup(popup_859276b8cd0ea85b722e8fabc98ecaa0)
+        ;
+
+        
+    
+    
+            var marker_ac33764ea8b50afa5d3c9fae8e1fd84b = L.marker(
+                [54.58438560588251, -5.935194713887871],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_e40b113080815c68d607cabfd2585032 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d73ada76b3dd51d16f9e9c9a2d0e88a5 = $(`<div id="html_d73ada76b3dd51d16f9e9c9a2d0e88a5" style="width: 100.0%; height: 100.0%;">Marketing, Recruitment,Communications and Internationalisation</div>`)[0];
+                popup_e40b113080815c68d607cabfd2585032.setContent(html_d73ada76b3dd51d16f9e9c9a2d0e88a5);
+            
+        
+
+        marker_ac33764ea8b50afa5d3c9fae8e1fd84b.bindPopup(popup_e40b113080815c68d607cabfd2585032)
+        ;
+
+        
+    
+    
+            var marker_4066b30e4e9be38b9d407dbc6ab3dc8b = L.marker(
+                [54.58641492042971, -5.942895237564077],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_e79da6764791108a88994dfb766ef8fb = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c77d7bb247e27b4c09dd571c55af923d = $(`<div id="html_c77d7bb247e27b4c09dd571c55af923d" style="width: 100.0%; height: 100.0%;">McClay Research Centre</div>`)[0];
+                popup_e79da6764791108a88994dfb766ef8fb.setContent(html_c77d7bb247e27b4c09dd571c55af923d);
+            
+        
+
+        marker_4066b30e4e9be38b9d407dbc6ab3dc8b.bindPopup(popup_e79da6764791108a88994dfb766ef8fb)
+        ;
+
+        
+    
+    
+            var marker_dfe8602dd911938bf9da48827d4fc460 = L.marker(
+                [54.58617988511076, -5.942385666388259],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_a1125267efafb445960d5505107091cf = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8b3ae9d116963f67fa37fb2375f44c7b = $(`<div id="html_8b3ae9d116963f67fa37fb2375f44c7b" style="width: 100.0%; height: 100.0%;">Medical Biology Centre (MBC)</div>`)[0];
+                popup_a1125267efafb445960d5505107091cf.setContent(html_8b3ae9d116963f67fa37fb2375f44c7b);
+            
+        
+
+        marker_dfe8602dd911938bf9da48827d4fc460.bindPopup(popup_a1125267efafb445960d5505107091cf)
+        ;
+
+        
+    
+    
+            var marker_50c49bc98e0f128cf4e2aff4f3f218a0 = L.marker(
+                [54.58432032316817, -5.9350927899592785],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_8c36f8bb896d01cc9a443856f9351413 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a5b005bcce5267fcec23c3d7e000e189 = $(`<div id="html_a5b005bcce5267fcec23c3d7e000e189" style="width: 100.0%; height: 100.0%;">Naughton Gallery at Queens</div>`)[0];
+                popup_8c36f8bb896d01cc9a443856f9351413.setContent(html_a5b005bcce5267fcec23c3d7e000e189);
+            
+        
+
+        marker_50c49bc98e0f128cf4e2aff4f3f218a0.bindPopup(popup_8c36f8bb896d01cc9a443856f9351413)
+        ;
+
+        
+    
+    
+            var marker_f56b8b70c53ac2c1b1948be74b5076ab = L.marker(
+                [54.58385279415107, -5.934543076524045],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_216d3602f2d27f25ca0564cde986bcbf = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2f4b9d7f0828a80390fb7e0f0dc38494 = $(`<div id="html_2f4b9d7f0828a80390fb7e0f0dc38494" style="width: 100.0%; height: 100.0%;">New Physics Building</div>`)[0];
+                popup_216d3602f2d27f25ca0564cde986bcbf.setContent(html_2f4b9d7f0828a80390fb7e0f0dc38494);
+            
+        
+
+        marker_f56b8b70c53ac2c1b1948be74b5076ab.bindPopup(popup_216d3602f2d27f25ca0564cde986bcbf)
+        ;
+
+        
+    
+    
+            var marker_c9b9fecf21c3e3764795d9abaaec059c = L.marker(
+                [54.58042280920047, -5.93707170772201],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_73c8093bc970dcec048376fdbeaa5fd1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e81f8f71b2085de87b0863bcc0cdeff5 = $(`<div id="html_e81f8f71b2085de87b0863bcc0cdeff5" style="width: 100.0%; height: 100.0%;">Northern Ireland Technology Centre (NITC)</div>`)[0];
+                popup_73c8093bc970dcec048376fdbeaa5fd1.setContent(html_e81f8f71b2085de87b0863bcc0cdeff5);
+            
+        
+
+        marker_c9b9fecf21c3e3764795d9abaaec059c.bindPopup(popup_73c8093bc970dcec048376fdbeaa5fd1)
+        ;
+
+        
+    
+    
+            var marker_2b2b5471637af0f8a6f433f822a66fe0 = L.marker(
+                [54.578523068300605, -5.937947913574511],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_83794fde6335d8a1b8d2a886a37c3407 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9c138e5ea0ccc027890253cf4fcedd39 = $(`<div id="html_9c138e5ea0ccc027890253cf4fcedd39" style="width: 100.0%; height: 100.0%;">Occupational Health and Safety Services</div>`)[0];
+                popup_83794fde6335d8a1b8d2a886a37c3407.setContent(html_9c138e5ea0ccc027890253cf4fcedd39);
+            
+        
+
+        marker_2b2b5471637af0f8a6f433f822a66fe0.bindPopup(popup_83794fde6335d8a1b8d2a886a37c3407)
+        ;
+
+        
+    
+    
+            var marker_f5cdd7b5519d2369c8345ebe42b3cc4b = L.marker(
+                [54.583846393394474, -5.934537353272603],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_f84c25866bdf3d225ce0f16d7ca77cda = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fc2ddef7bbdd49dd342d3729d20326b8 = $(`<div id="html_fc2ddef7bbdd49dd342d3729d20326b8" style="width: 100.0%; height: 100.0%;">Old Physics Building</div>`)[0];
+                popup_f84c25866bdf3d225ce0f16d7ca77cda.setContent(html_fc2ddef7bbdd49dd342d3729d20326b8);
+            
+        
+
+        marker_f5cdd7b5519d2369c8345ebe42b3cc4b.bindPopup(popup_f84c25866bdf3d225ce0f16d7ca77cda)
+        ;
+
+        
+    
+    
+            var marker_2b417d7f3679362fa16d19e89a8709d0 = L.marker(
+                [54.58470105949851, -5.9334766034009006],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_076f690715b068ffa1506609648e6382 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_82b50ed04ffdad4f2745bca49a71fdbc = $(`<div id="html_82b50ed04ffdad4f2745bca49a71fdbc" style="width: 100.0%; height: 100.0%;">Peter Froggatt Centre (PFC)</div>`)[0];
+                popup_076f690715b068ffa1506609648e6382.setContent(html_82b50ed04ffdad4f2745bca49a71fdbc);
+            
+        
+
+        marker_2b417d7f3679362fa16d19e89a8709d0.bindPopup(popup_076f690715b068ffa1506609648e6382)
+        ;
+
+        
+    
+    
+            var marker_fb27612b2d6c0c8ddde8a9bd793ba066 = L.marker(
+                [54.586373742326955, -5.942892824947972],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_d438dc0d698ee463236781b8a6d208e9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e46b63d57dba5d5bad6bfa1eb8599662 = $(`<div id="html_e46b63d57dba5d5bad6bfa1eb8599662" style="width: 100.0%; height: 100.0%;">Pharmacy Building</div>`)[0];
+                popup_d438dc0d698ee463236781b8a6d208e9.setContent(html_e46b63d57dba5d5bad6bfa1eb8599662);
+            
+        
+
+        marker_fb27612b2d6c0c8ddde8a9bd793ba066.bindPopup(popup_d438dc0d698ee463236781b8a6d208e9)
+        ;
+
+        
+    
+    
+            var marker_6fee0063a9424b0e556cfdfd970e47c4 = L.marker(
+                [54.58109000876869, -5.929670225916936],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_c6712e2d159ed3228b9652e6bb737004 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_cd4f9ba86670954d923fdabbc1a4b566 = $(`<div id="html_cd4f9ba86670954d923fdabbc1a4b566" style="width: 100.0%; height: 100.0%;">Physical Education Centre (PEC)</div>`)[0];
+                popup_c6712e2d159ed3228b9652e6bb737004.setContent(html_cd4f9ba86670954d923fdabbc1a4b566);
+            
+        
+
+        marker_6fee0063a9424b0e556cfdfd970e47c4.bindPopup(popup_c6712e2d159ed3228b9652e6bb737004)
+        ;
+
+        
+    
+    
+            var marker_1583c63d2981f62f4fc8e2bc6f942223 = L.marker(
+                [54.58546208738367, -5.933957111506692],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_4bdc5901809fac317843f60ae0b23de0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3027c9e7ef793277bb57ef1fc6441cbe = $(`<div id="html_3027c9e7ef793277bb57ef1fc6441cbe" style="width: 100.0%; height: 100.0%;">Queens Film Theatre (QFT)</div>`)[0];
+                popup_4bdc5901809fac317843f60ae0b23de0.setContent(html_3027c9e7ef793277bb57ef1fc6441cbe);
+            
+        
+
+        marker_1583c63d2981f62f4fc8e2bc6f942223.bindPopup(popup_4bdc5901809fac317843f60ae0b23de0)
+        ;
+
+        
+    
+    
+            var marker_cd6b12d0e0816ec575f152145bacd397 = L.marker(
+                [54.58416955080209, -5.9354173372175625],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_3db07cf58dc8d9be285315e42ed48135 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e8bc32bd48f7b09e88c6a1425de2ada4 = $(`<div id="html_e8bc32bd48f7b09e88c6a1425de2ada4" style="width: 100.0%; height: 100.0%;">Registrar and Chief Operating Officer</div>`)[0];
+                popup_3db07cf58dc8d9be285315e42ed48135.setContent(html_e8bc32bd48f7b09e88c6a1425de2ada4);
+            
+        
+
+        marker_cd6b12d0e0816ec575f152145bacd397.bindPopup(popup_3db07cf58dc8d9be285315e42ed48135)
+        ;
+
+        
+    
+    
+            var marker_c3b29184c290735427a1e7bf24a0a3e9 = L.marker(
+                [54.585498286277655, -5.936380984511049],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_b7dd4500c35b2ef362cd9a2db459c35e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_799cc759e118ac07e5de9e1e1687aab8 = $(`<div id="html_799cc759e118ac07e5de9e1e1687aab8" style="width: 100.0%; height: 100.0%;">Research and Enterprise</div>`)[0];
+                popup_b7dd4500c35b2ef362cd9a2db459c35e.setContent(html_799cc759e118ac07e5de9e1e1687aab8);
+            
+        
+
+        marker_c3b29184c290735427a1e7bf24a0a3e9.bindPopup(popup_b7dd4500c35b2ef362cd9a2db459c35e)
+        ;
+
+        
+    
+    
+            var marker_44f1a93845e46a36c7ebbf2a01c81b70 = L.marker(
+                [54.57617620692349, -5.934829401341759],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_5991f15003161b1423f25e58e5ef0764 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a82426ec6b7d8e76c87b745c247ee02d = $(`<div id="html_a82426ec6b7d8e76c87b745c247ee02d" style="width: 100.0%; height: 100.0%;">Riddel Hal</div>`)[0];
+                popup_5991f15003161b1423f25e58e5ef0764.setContent(html_a82426ec6b7d8e76c87b745c247ee02d);
+            
+        
+
+        marker_44f1a93845e46a36c7ebbf2a01c81b70.bindPopup(popup_5991f15003161b1423f25e58e5ef0764)
+        ;
+
+        
+    
+    
+            var marker_c7655041cf344ff73093f719a8027001 = L.marker(
+                [54.580530653927234, -5.93777668187978],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_4bda785270039e2658abfca257710284 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_30bc4edadee2c67304938fba42c8f127 = $(`<div id="html_30bc4edadee2c67304938fba42c8f127" style="width: 100.0%; height: 100.0%;">Sonic Arts Research Centre (SARC)</div>`)[0];
+                popup_4bda785270039e2658abfca257710284.setContent(html_30bc4edadee2c67304938fba42c8f127);
+            
+        
+
+        marker_c7655041cf344ff73093f719a8027001.bindPopup(popup_4bda785270039e2658abfca257710284)
+        ;
+
+        
+    
+    
+            var marker_fbb368fc844cc2c2726362474212ba70 = L.marker(
+                [54.58375784064992, -5.935614140012404],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_bad09f22321246ffb468dae0d2aaf4b1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_50e5660918051661576ef6b1471fa1f8 = $(`<div id="html_50e5660918051661576ef6b1471fa1f8" style="width: 100.0%; height: 100.0%;">South Dining Hal</div>`)[0];
+                popup_bad09f22321246ffb468dae0d2aaf4b1.setContent(html_50e5660918051661576ef6b1471fa1f8);
+            
+        
+
+        marker_fbb368fc844cc2c2726362474212ba70.bindPopup(popup_bad09f22321246ffb468dae0d2aaf4b1)
+        ;
+
+        
+    
+    
+            var marker_d4bded408a2cc1d666e4946f30a68331 = L.marker(
+                [54.58421618149038, -5.935216171561602],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_12bdbe3751d1b46b3fb296e177d60b58 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c77ac480d8c42789e715ebc57ed9cb0a = $(`<div id="html_c77ac480d8c42789e715ebc57ed9cb0a" style="width: 100.0%; height: 100.0%;">Student Plus </div>`)[0];
+                popup_12bdbe3751d1b46b3fb296e177d60b58.setContent(html_c77ac480d8c42789e715ebc57ed9cb0a);
+            
+        
+
+        marker_d4bded408a2cc1d666e4946f30a68331.bindPopup(popup_12bdbe3751d1b46b3fb296e177d60b58)
+        ;
+
+        
+    
+    
+            var marker_a281de026a3e4a65f6fc5905067044d3 = L.marker(
+                [54.58455626384715, -5.937126707190225],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_3cc93f3d7244d72e20a94daf48500179 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3f74bc38a05ca2e1f498970462dcbd03 = $(`<div id="html_3f74bc38a05ca2e1f498970462dcbd03" style="width: 100.0%; height: 100.0%;">One Elmwood, Student Centre and Students Union</div>`)[0];
+                popup_3cc93f3d7244d72e20a94daf48500179.setContent(html_3f74bc38a05ca2e1f498970462dcbd03);
+            
+        
+
+        marker_a281de026a3e4a65f6fc5905067044d3.bindPopup(popup_3cc93f3d7244d72e20a94daf48500179)
+        ;
+
+        
+    
+    
+            var marker_20773f82e424b9fc9695ad03070ecf3c = L.marker(
+                [54.5838205011943, -5.932104516791865],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_0ce5a09c20e8f1cf558fbada6b43c2f0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f5971656cff7d9055e30c0a050a9167f = $(`<div id="html_f5971656cff7d9055e30c0a050a9167f" style="width: 100.0%; height: 100.0%;">The McClay Library</div>`)[0];
+                popup_0ce5a09c20e8f1cf558fbada6b43c2f0.setContent(html_f5971656cff7d9055e30c0a050a9167f);
+            
+        
+
+        marker_20773f82e424b9fc9695ad03070ecf3c.bindPopup(popup_0ce5a09c20e8f1cf558fbada6b43c2f0)
+        ;
+
+        
+    
+    
+            var marker_87d2d602154bf4f4827fe5be70051911 = L.marker(
+                [54.58398355243926, -5.937445814805631],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_2190d627860a1d6d0d2a92b5ed0e6d74 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fcf2390ae903ed3a149cddfd3950beb6 = $(`<div id="html_fcf2390ae903ed3a149cddfd3950beb6" style="width: 100.0%; height: 100.0%;">University Health Centre</div>`)[0];
+                popup_2190d627860a1d6d0d2a92b5ed0e6d74.setContent(html_fcf2390ae903ed3a149cddfd3950beb6);
+            
+        
+
+        marker_87d2d602154bf4f4827fe5be70051911.bindPopup(popup_2190d627860a1d6d0d2a92b5ed0e6d74)
+        ;
+
+        
+    
+    
+            var marker_83510e540d19272452e0274743d392c7 = L.marker(
+                [54.58433897538085, -5.93529395561524],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_28499f3e2273670afc2bab993a69babe = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_36332c3e751d3de5f78a415ca8c0a913 = $(`<div id="html_36332c3e751d3de5f78a415ca8c0a913" style="width: 100.0%; height: 100.0%;">Vice-Chancellors Office</div>`)[0];
+                popup_28499f3e2273670afc2bab993a69babe.setContent(html_36332c3e751d3de5f78a415ca8c0a913);
+            
+        
+
+        marker_83510e540d19272452e0274743d392c7.bindPopup(popup_28499f3e2273670afc2bab993a69babe)
+        ;
+
+        
+    
+    
+            var marker_3f008a9ebc5ed012773d9bbb2731bb99 = L.marker(
+                [54.58450009692936, -5.935297021020948],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_41dea66bdd8a0a3f357aa8eb72fd3791 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5cb702bdc65dbc51424e59dd004c4b8d = $(`<div id="html_5cb702bdc65dbc51424e59dd004c4b8d" style="width: 100.0%; height: 100.0%;">Welcome Centre</div>`)[0];
+                popup_41dea66bdd8a0a3f357aa8eb72fd3791.setContent(html_5cb702bdc65dbc51424e59dd004c4b8d);
+            
+        
+
+        marker_3f008a9ebc5ed012773d9bbb2731bb99.bindPopup(popup_41dea66bdd8a0a3f357aa8eb72fd3791)
+        ;
+
+        
+    
+    
+            var marker_bddfb029a96e4450012437e284e92dc8 = L.marker(
+                [54.58371597203839, -5.9360391443710725],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_c82080abd544dda236367487dcd6db5a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e2cb17f5f607b7079ba901c26798f7cc = $(`<div id="html_e2cb17f5f607b7079ba901c26798f7cc" style="width: 100.0%; height: 100.0%;">Whitla Hall</div>`)[0];
+                popup_c82080abd544dda236367487dcd6db5a.setContent(html_e2cb17f5f607b7079ba901c26798f7cc);
+            
+        
+
+        marker_bddfb029a96e4450012437e284e92dc8.bindPopup(popup_c82080abd544dda236367487dcd6db5a)
+        ;
+
+        
+    
+    
+            var marker_4b7382ad96f986dfb26a4a04b9d150e1 = L.marker(
+                [54.5859453835362, -5.9435628928809185],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_a633a1cb0dc583f263dbf5b519bd204b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f517337a491b6c7e5f087a25de3c751d = $(`<div id="html_f517337a491b6c7e5f087a25de3c751d" style="width: 100.0%; height: 100.0%;">Whitla Medical Building</div>`)[0];
+                popup_a633a1cb0dc583f263dbf5b519bd204b.setContent(html_f517337a491b6c7e5f087a25de3c751d);
+            
+        
+
+        marker_4b7382ad96f986dfb26a4a04b9d150e1.bindPopup(popup_a633a1cb0dc583f263dbf5b519bd204b)
+        ;
+
+        
+    
+    
+            var marker_5c99f420f98df026e41f61f79acae342 = L.marker(
+                [54.5861396452996, -5.944647615604617],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_c9b21d49b09fce4724f4738ea65ba9dd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2454aa638dbfb5b01e0ca89c2d9e951b = $(`<div id="html_2454aa638dbfb5b01e0ca89c2d9e951b" style="width: 100.0%; height: 100.0%;">Wellcome-Wolfson Institute for Experimental Medicine</div>`)[0];
+                popup_c9b21d49b09fce4724f4738ea65ba9dd.setContent(html_2454aa638dbfb5b01e0ca89c2d9e951b);
+            
+        
+
+        marker_5c99f420f98df026e41f61f79acae342.bindPopup(popup_c9b21d49b09fce4724f4738ea65ba9dd)
+        ;
+
+        
+    
+    
+            var marker_b3c48f507f2b62c59618376c879a92aa = L.marker(
+                [54.58629381455676, -5.935567924057082],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_0e57357e73b28b668941f44ac7de0347 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6ee1502e31b96f21c9aa87d0796611ea = $(`<div id="html_6ee1502e31b96f21c9aa87d0796611ea" style="width: 100.0%; height: 100.0%;">Arts, Humanities and Social Sciences</div>`)[0];
+                popup_0e57357e73b28b668941f44ac7de0347.setContent(html_6ee1502e31b96f21c9aa87d0796611ea);
+            
+        
+
+        marker_b3c48f507f2b62c59618376c879a92aa.bindPopup(popup_0e57357e73b28b668941f44ac7de0347)
+        ;
+
+        
+    
+    
+            var marker_1b10024a0c9781b2c4fe2cc98c0da6e7 = L.marker(
+                [54.58242405458074, -5.937056795100541],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_a2c08bc8071069a20b1380db6a85c00b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d19580e1dbfd29d736b2983809440652 = $(`<div id="html_d19580e1dbfd29d736b2983809440652" style="width: 100.0%; height: 100.0%;">Engineering and Physical Sciences</div>`)[0];
+                popup_a2c08bc8071069a20b1380db6a85c00b.setContent(html_d19580e1dbfd29d736b2983809440652);
+            
+        
+
+        marker_1b10024a0c9781b2c4fe2cc98c0da6e7.bindPopup(popup_a2c08bc8071069a20b1380db6a85c00b)
+        ;
+
+        
+    
+    
+            var marker_853e13b1611bcc292e62308ad187801e = L.marker(
+                [54.585059641312405, -5.940966659119539],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_5491ff262d877318d0bb75b398c5015b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f3d02a23fcfbb2345d82a6a0dedd1f71 = $(`<div id="html_f3d02a23fcfbb2345d82a6a0dedd1f71" style="width: 100.0%; height: 100.0%;">Medicine, Health and Life Sciences</div>`)[0];
+                popup_5491ff262d877318d0bb75b398c5015b.setContent(html_f3d02a23fcfbb2345d82a6a0dedd1f71);
+            
+        
+
+        marker_853e13b1611bcc292e62308ad187801e.bindPopup(popup_5491ff262d877318d0bb75b398c5015b)
+        ;
+
+        
+    
+    
+            var marker_61fa81fc509c46c61c8a424279c87949 = L.marker(
+                [54.58576124307094, -5.935888914346184],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_b16427ae558087ad142b61ae80843177 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2df73f7c6c8e1eec3b2028c464ef504d = $(`<div id="html_2df73f7c6c8e1eec3b2028c464ef504d" style="width: 100.0%; height: 100.0%;">Arts, English and Languages</div>`)[0];
+                popup_b16427ae558087ad142b61ae80843177.setContent(html_2df73f7c6c8e1eec3b2028c464ef504d);
+            
+        
+
+        marker_61fa81fc509c46c61c8a424279c87949.bindPopup(popup_b16427ae558087ad142b61ae80843177)
+        ;
+
+        
+    
+    
+            var marker_60da5a4238e7acea34b2452508ef82c7 = L.marker(
+                [54.578972408747305, -5.936497608696263],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_ad4dd61228d979b1bcafff069dc8e72d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_adacd4db8a10f55a89297cf68dbbacb5 = $(`<div id="html_adacd4db8a10f55a89297cf68dbbacb5" style="width: 100.0%; height: 100.0%;">Biological Sciences</div>`)[0];
+                popup_ad4dd61228d979b1bcafff069dc8e72d.setContent(html_adacd4db8a10f55a89297cf68dbbacb5);
+            
+        
+
+        marker_60da5a4238e7acea34b2452508ef82c7.bindPopup(popup_ad4dd61228d979b1bcafff069dc8e72d)
+        ;
+
+        
+    
+    
+            var marker_6bdd4f49eb9c39ec81d5e2539d989a33 = L.marker(
+                [54.581204721059905, -5.936039256622704],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_185e7d7331e3966df4cdcff41707d63f = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7b3f3a3014add714bc677dc96c5df64f = $(`<div id="html_7b3f3a3014add714bc677dc96c5df64f" style="width: 100.0%; height: 100.0%;">Chemistry and Chemical Engineering</div>`)[0];
+                popup_185e7d7331e3966df4cdcff41707d63f.setContent(html_7b3f3a3014add714bc677dc96c5df64f);
+            
+        
+
+        marker_6bdd4f49eb9c39ec81d5e2539d989a33.bindPopup(popup_185e7d7331e3966df4cdcff41707d63f)
+        ;
+
+        
+    
+    
+            var marker_b9e8b4b04074ec9a2c7163be51605358 = L.marker(
+                [54.58187878256887, -5.937437179303816],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_df1ddd253a1e28355ffff9b4b448ea2e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e7b040392d2bb1c7a71ad522fb7c745b = $(`<div id="html_e7b040392d2bb1c7a71ad522fb7c745b" style="width: 100.0%; height: 100.0%;">Electronics, Electrical Engineering and Computer Science</div>`)[0];
+                popup_df1ddd253a1e28355ffff9b4b448ea2e.setContent(html_e7b040392d2bb1c7a71ad522fb7c745b);
+            
+        
+
+        marker_b9e8b4b04074ec9a2c7163be51605358.bindPopup(popup_df1ddd253a1e28355ffff9b4b448ea2e)
+        ;
+
+        
+    
+    
+            var marker_6cb2d40e744a18ad5f2c88f39af11b34 = L.marker(
+                [54.585402408695174, -5.93325601720141],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_552a6c99eebb58f2fd84072e10ceaccb = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6d8081ce773cec7829900eccdee5098f = $(`<div id="html_6d8081ce773cec7829900eccdee5098f" style="width: 100.0%; height: 100.0%;">History, Anthropology, Philosophy and Politics</div>`)[0];
+                popup_552a6c99eebb58f2fd84072e10ceaccb.setContent(html_6d8081ce773cec7829900eccdee5098f);
+            
+        
+
+        marker_6cb2d40e744a18ad5f2c88f39af11b34.bindPopup(popup_552a6c99eebb58f2fd84072e10ceaccb)
+        ;
+
+        
+    
+    
+            var marker_3aa9b3c68f18ea5cd5b4a89c5e3226c0 = L.marker(
+                [54.5850675194871, -5.93413954461042],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_4b16f9520fef2afb9bc1d8ef7df7fe08 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b4c77acd6a3c3a5731e35e036652d24b = $(`<div id="html_b4c77acd6a3c3a5731e35e036652d24b" style="width: 100.0%; height: 100.0%;">Law</div>`)[0];
+                popup_4b16f9520fef2afb9bc1d8ef7df7fe08.setContent(html_b4c77acd6a3c3a5731e35e036652d24b);
+            
+        
+
+        marker_3aa9b3c68f18ea5cd5b4a89c5e3226c0.bindPopup(popup_4b16f9520fef2afb9bc1d8ef7df7fe08)
+        ;
+
+        
+    
+    
+            var marker_e28a3c02d4dd47b4293aae5874663c7b = L.marker(
+                [54.58385249704618, -5.934545652331939],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_051b11cd0afe9fce0a9a49287f725fb9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5f4a42b2e0d3f383089b4e08817b2d99 = $(`<div id="html_5f4a42b2e0d3f383089b4e08817b2d99" style="width: 100.0%; height: 100.0%;">Mathematics and Physics</div>`)[0];
+                popup_051b11cd0afe9fce0a9a49287f725fb9.setContent(html_5f4a42b2e0d3f383089b4e08817b2d99);
+            
+        
+
+        marker_e28a3c02d4dd47b4293aae5874663c7b.bindPopup(popup_051b11cd0afe9fce0a9a49287f725fb9)
+        ;
+
+        
+    
+    
+            var marker_1ce90f71c0832cfc2c12d1423b66c39c = L.marker(
+                [54.579998106495864, -5.935939683956971],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_742556680f9c70d9a709ed13cf4c72f6 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f3201e1df2d0eff947c906a84904c34c = $(`<div id="html_f3201e1df2d0eff947c906a84904c34c" style="width: 100.0%; height: 100.0%;">Mechanical and Aerospace Engineering</div>`)[0];
+                popup_742556680f9c70d9a709ed13cf4c72f6.setContent(html_f3201e1df2d0eff947c906a84904c34c);
+            
+        
+
+        marker_1ce90f71c0832cfc2c12d1423b66c39c.bindPopup(popup_742556680f9c70d9a709ed13cf4c72f6)
+        ;
+
+        
+    
+    
+            var marker_e7e83bfecb05971d4f98a45e0c63f545 = L.marker(
+                [54.585954081734755, -5.943572028320684],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_ec29c9bc3f6e0c2f7da13cb7e4be9358 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bcc525abaac88282b126504103ae39b7 = $(`<div id="html_bcc525abaac88282b126504103ae39b7" style="width: 100.0%; height: 100.0%;">Medicine, Dentistry and Biomedical Sciences</div>`)[0];
+                popup_ec29c9bc3f6e0c2f7da13cb7e4be9358.setContent(html_bcc525abaac88282b126504103ae39b7);
+            
+        
+
+        marker_e7e83bfecb05971d4f98a45e0c63f545.bindPopup(popup_ec29c9bc3f6e0c2f7da13cb7e4be9358)
+        ;
+
+        
+    
+    
+            var marker_a27250f7d82ed19e59ae882b9f2923d2 = L.marker(
+                [54.58109995799967, -5.935992882063089],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_6335e3ceedf9ce9c3574bb7dc3359d32 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_02b77bc1e3ff3a7e692934b21a4f1332 = $(`<div id="html_02b77bc1e3ff3a7e692934b21a4f1332" style="width: 100.0%; height: 100.0%;">Natural and Built Environment</div>`)[0];
+                popup_6335e3ceedf9ce9c3574bb7dc3359d32.setContent(html_02b77bc1e3ff3a7e692934b21a4f1332);
+            
+        
+
+        marker_a27250f7d82ed19e59ae882b9f2923d2.bindPopup(popup_6335e3ceedf9ce9c3574bb7dc3359d32)
+        ;
+
+        
+    
+    
+            var marker_dfba4b7c1f5c52e6ebc3db5c16f300b9 = L.marker(
+                [54.58588956241748, -5.943127866735547],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_27767efb08c959e504d0c675712aca2e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2be4b647a0b0ec900a767c5c01d6545f = $(`<div id="html_2be4b647a0b0ec900a767c5c01d6545f" style="width: 100.0%; height: 100.0%;">Nursing and Midwifery</div>`)[0];
+                popup_27767efb08c959e504d0c675712aca2e.setContent(html_2be4b647a0b0ec900a767c5c01d6545f);
+            
+        
+
+        marker_dfba4b7c1f5c52e6ebc3db5c16f300b9.bindPopup(popup_27767efb08c959e504d0c675712aca2e)
+        ;
+
+        
+    
+    
+            var marker_bacfcaff14d06ca5de52893ac991d985 = L.marker(
+                [54.58637751320317, -5.942855959404591],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_ab81b266b10c79f0c26ad231a8d5c3fb = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c480caf88de4a85dc41e21d113912c85 = $(`<div id="html_c480caf88de4a85dc41e21d113912c85" style="width: 100.0%; height: 100.0%;">Pharmacy</div>`)[0];
+                popup_ab81b266b10c79f0c26ad231a8d5c3fb.setContent(html_c480caf88de4a85dc41e21d113912c85);
+            
+        
+
+        marker_bacfcaff14d06ca5de52893ac991d985.bindPopup(popup_ab81b266b10c79f0c26ad231a8d5c3fb)
+        ;
+
+        
+    
+    
+            var marker_00e45f476a59cea589ac31ee1108d5e4 = L.marker(
+                [54.58116272803322, -5.937930621647734],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_6c87cc3b1d2e1a4617e864267dab92ca = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f90bd9196c1be3215e04eccbfda89ff3 = $(`<div id="html_f90bd9196c1be3215e04eccbfda89ff3" style="width: 100.0%; height: 100.0%;">Psychology</div>`)[0];
+                popup_6c87cc3b1d2e1a4617e864267dab92ca.setContent(html_f90bd9196c1be3215e04eccbfda89ff3);
+            
+        
+
+        marker_00e45f476a59cea589ac31ee1108d5e4.bindPopup(popup_6c87cc3b1d2e1a4617e864267dab92ca)
+        ;
+
+        
+    
+    
+            var marker_70a805b9ca046361fd47d07c20081ef1 = L.marker(
+                [54.57628570307882, -5.935233726404529],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_921a096393f57bfa8912c0dbe8d21dd9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_550328d5b60c9ff892f6e8125ea79148 = $(`<div id="html_550328d5b60c9ff892f6e8125ea79148" style="width: 100.0%; height: 100.0%;">Queens Business School</div>`)[0];
+                popup_921a096393f57bfa8912c0dbe8d21dd9.setContent(html_550328d5b60c9ff892f6e8125ea79148);
+            
+        
+
+        marker_70a805b9ca046361fd47d07c20081ef1.bindPopup(popup_921a096393f57bfa8912c0dbe8d21dd9)
+        ;
+
+        
+    
+    
+            var marker_6480c6a164db3cf25c2bb9f1cddeb600 = L.marker(
+                [54.5858713160048, -5.9313909244037],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_4427609bae452960b23bc93dbc81bfd8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8e5cd5ff14023082a232c0efdf16fe44 = $(`<div id="html_8e5cd5ff14023082a232c0efdf16fe44" style="width: 100.0%; height: 100.0%;">Social Sciences, Education and Social Work</div>`)[0];
+                popup_4427609bae452960b23bc93dbc81bfd8.setContent(html_8e5cd5ff14023082a232c0efdf16fe44);
+            
+        
+
+        marker_6480c6a164db3cf25c2bb9f1cddeb600.bindPopup(popup_4427609bae452960b23bc93dbc81bfd8)
+        ;
+
+        
+    
+    
+            var marker_1d2639ce2f2e866f627b88c6d18a3279 = L.marker(
+                [54.585487641335426, -5.934184670309235],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_49fa57d79abce323995a6133b507d8af = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fb19bb36095da7f8bfc6b25295058e74 = $(`<div id="html_fb19bb36095da7f8bfc6b25295058e74" style="width: 100.0%; height: 100.0%;">The Senator George J Mitchell Institute for Global Peace, Security and Justice</div>`)[0];
+                popup_49fa57d79abce323995a6133b507d8af.setContent(html_fb19bb36095da7f8bfc6b25295058e74);
+            
+        
+
+        marker_1d2639ce2f2e866f627b88c6d18a3279.bindPopup(popup_49fa57d79abce323995a6133b507d8af)
+        ;
+
+        
+    
+    
+            var marker_d1bdbf34f776c23bcc2f1c846fadcc74 = L.marker(
+                [54.57617014154859, -5.935100555729443],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_f4847c90debe1f724861fd2fa2486dae = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_80dd9d02e12b553220242c39d3d1e26b = $(`<div id="html_80dd9d02e12b553220242c39d3d1e26b" style="width: 100.0%; height: 100.0%;">The William J Clinton Leadership Institute</div>`)[0];
+                popup_f4847c90debe1f724861fd2fa2486dae.setContent(html_80dd9d02e12b553220242c39d3d1e26b);
+            
+        
+
+        marker_d1bdbf34f776c23bcc2f1c846fadcc74.bindPopup(popup_f4847c90debe1f724861fd2fa2486dae)
+        ;
+
+        
+    
+    
+            var marker_e7f4415acd88abcb4d2644f3ce7b116d = L.marker(
+                [54.580479444858256, -5.9373473784700375],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_093b51309110b998f2d077509e00f472 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_54f5cf7794ef7ea4a35ed0b65bc95b53 = $(`<div id="html_54f5cf7794ef7ea4a35ed0b65bc95b53" style="width: 100.0%; height: 100.0%;">The Institute for Global Food Security</div>`)[0];
+                popup_093b51309110b998f2d077509e00f472.setContent(html_54f5cf7794ef7ea4a35ed0b65bc95b53);
+            
+        
+
+        marker_e7f4415acd88abcb4d2644f3ce7b116d.bindPopup(popup_093b51309110b998f2d077509e00f472)
+        ;
+
+        
+    
+    
+            var marker_c88adb52a4031bf068a2d1b99cc98da9 = L.marker(
+                [54.614029465909745, -5.89993074581833],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_18db6f2548f0f6415129dfb787211d0c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3514bae65db362dbd54a91c941c45100 = $(`<div id="html_3514bae65db362dbd54a91c941c45100" style="width: 100.0%; height: 100.0%;">The Institute of Electronics, Communications and Information Technology (Titanic Quarter)</div>`)[0];
+                popup_18db6f2548f0f6415129dfb787211d0c.setContent(html_3514bae65db362dbd54a91c941c45100);
+            
+        
+
+        marker_c88adb52a4031bf068a2d1b99cc98da9.bindPopup(popup_18db6f2548f0f6415129dfb787211d0c)
+        ;
+
+        
+    
+    
+            var marker_6d96cf194357e5169ac3187e5af32b82 = L.marker(
+                [54.58662113764628, -5.946559428537761],
+                {}
+            ).addTo(map_a97d4053b4535520e341689b049bd505);
+        
+    
+        var popup_8d606726ee497ea262e0e8c4c8a87501 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3f7179d68a42ddab380af2369a52f750 = $(`<div id="html_3f7179d68a42ddab380af2369a52f750" style="width: 100.0%; height: 100.0%;">The Institute of Health Sciences</div>`)[0];
+                popup_8d606726ee497ea262e0e8c4c8a87501.setContent(html_3f7179d68a42ddab380af2369a52f750);
+            
+        
+
+        marker_6d96cf194357e5169ac3187e5af32b82.bindPopup(popup_8d606726ee497ea262e0e8c4c8a87501)
+        ;
+
+        
+    
+</script>
+</html>
