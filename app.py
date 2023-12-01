@@ -6,27 +6,29 @@ import time
 import math
 
 
-
 #Define app and the folder directorys for templates, static and unique maps
 app = Flask(__name__, template_folder='templates', static_folder='static')
 map_folder = os.path.join(app.root_path, 'cached maps')
 
-##########################################################################################################################################
 
-#Initilise an initial position for the map to centre on and destination
-your_latitude = None
-your_longitude = None
+#Initilise start and end positions
+start_latitude = None
+start_longitude = None
+start_name = ''
 destination_latitude = None
 destination_longitude = None
-selected_destination_name = ''
-selected_location_name = ''
+destination_name = ''
 #ID used for map name generation
 global_id = None
 #live_location inisitialise as false
 live_location = False
+#Google maps average walking speed in kmh
+speed = 4.8
+#Initilise total distance
+result = str()
 
 locations = [
-    #LOCATION
+#LOCATION
     [['Academic and Student Affairs'], [54.58437403687632, -5.933474677076396]],
     [['Administration Building'], [54.58452736772177, -5.93327688374742]],
     [['Ashby Building'], [54.58007433547152, -5.935592059498496]],
@@ -86,11 +88,11 @@ locations = [
     [['Whitla Hall'], [54.58371597203839, -5.9360391443710725]],
     [['Whitla Medical Building'], [54.5859453835362, -5.9435628928809185]],
     [['Wellcome-Wolfson Institute for Experimental Medicine'], [54.5861396452996, -5.944647615604617]],
-    #FACULTY OFFICES
+#FACULTY OFFICES
     [['Arts, Humanities and Social Sciences'], [54.58629381455676, -5.935567924057082]],
     [['Engineering and Physical Sciences'], [54.58242405458074, -5.937056795100541]],
     [['Medicine, Health and Life Sciences'], [54.585059641312405, -5.940966659119539]],
-    #SCHOOL OFFICES
+#SCHOOL OFFICES
     [['Arts, English and Languages'], [54.58576124307094, -5.935888914346184]],
     [['Chemistry and Chemical Engineering'], [54.581204721059905, -5.936039256622704]],
     [['Electronics, Electrical Engineering and Computer Science'], [54.58187878256887, -5.937437179303816]],
@@ -105,15 +107,14 @@ locations = [
     [['Psychology'], [54.58116272803322, -5.937930621647734]],
     [['Queens Business School'], [54.57628570307882, -5.935233726404529]],
     [['Social Sciences, Education and Social Work'], [54.58576463882744, -5.931447405599344]],
-    #GLOBAL RESEARCH INSTITUTES
+#GLOBAL RESEARCH INSTITUTES
     [['The Senator George J Mitchell Institute for Global Peace, Security and Justice'], [54.585487641335426, -5.934184670309235]],
     [['The William J Clinton Leadership Institute'], [54.57617014154859, -5.935100555729443]],
     [['The Institute for Global Food Security'], [54.580479444858256, -5.9373473784700375]],
     [['The Institute of Electronics, Communications and Information Technology (Titanic Quarter)'], [54.614029465909745, -5.89993074581833]],
-    [['The Institute of Health Sciences'], [54.58663012747263, -5.946840979530259]]
+    [['The Institute of Health Sciences'], [54.58663012747263, -5.946840979530259]],
+
 ]
-
-
 
 road_network = [
     [[82, 6, 15, 16, 17], [54.58319268940053, -5.936868755846738]],#1
@@ -194,7 +195,7 @@ road_network = [
     [[70, 77, 92, 145, 152], [54.58632104969627, -5.94208974949905]],#76
     [[76, 78, 166, 144], [54.5866463637786, -5.943311165137115]],#77
     [[92, 77, 118], [54.587301380207606, -5.942764941998767]],#78
-    #Added for better roads
+#Added for better roads
     [[60, 19], [54.584739765530195, -5.940698108954276]],#79
     [[10, 81, 109, 149], [54.57908623937899, -5.936620134038731]],#80
     [[3, 80], [54.57992308461903, -5.938171705716185]],#81
@@ -215,7 +216,7 @@ road_network = [
     [[32, 134], [54.584831619591824, -5.933181797200551]],#96
     [[96, 35, 112, 151], [54.584676186104666, -5.933128153025629]],#97
     [[43, 50, 168], [54.586386012961114, -5.93574750481616]],#98
-    #Titanic
+#Titanic route
     [[61, 100], [54.593509457526835, -5.931132178157443]],#99
     [[99, 101], [54.595962004668316, -5.93139770330602]],#100
     [[100, 102], [54.59637507449447, -5.921317878608474]],#101
@@ -226,7 +227,7 @@ road_network = [
     [[105, 107], [54.60435546753285, -5.913424185911486]],#106
     [[106, 108], [54.613624547044715, -5.900027458522031]],#107
     [[107], [54.614029465909745, -5.89993074581833]],#108 #The Institute of Electronics, Communications and Information Technology (Titanic Quarter)
-    #BUILDINGS ETC//
+#BUILDINGS
     [[80], [54.57896703662099, -5.936502371659701]],#109 Biological Sciences
     [[26, 141], [54.58450009692936, -5.935297021020948]],#110 Welcome Centre
     [[112, 130, 131], [54.58437403687632, -5.933474677076396]],#Academic and Student Affairs #111
@@ -253,7 +254,7 @@ road_network = [
     [[175], [54.58514430450694, -5.93473703268367]],#Graduate School #132
     [[110, 123], [54.58454881219248, -5.935079378911786]],#Great Hall #133
     [[33, 34, 96], [54.585011418634664, -5.93316569502097]],#Harty Room #134
-    [[116, 189], [54.58660702320403, -5.946585803378913]],#Health Sciences Building #135
+    [[116, 188], [54.58660702320403, -5.946585803378913]],#Health Sciences Building #135
     [[37, 130, 131], [54.58419837710644, -5.933606314991591]],#Human Resources #136
     [[37, 39, 162], [54.58380395735038, -5.932364910656428]],#Information Services #137
     [[140, 149], [54.57890534318588, -5.9378337586596714]],#Institute of Professional Legal Studies (IPLS) #138
@@ -286,11 +287,11 @@ road_network = [
     [[25, 159], [54.58371597203839, -5.9360391443710725]],#Whitla Hall #165
     [[178, 77], [54.5859453835362, -5.9435628928809185]],#Whitla Medical Building #166
     [[75, 116], [54.585997517261205, -5.944159030516546]],#Wellcome-Wolfson Institute for Experimental Medicine #167
-    #FACULTY OFFICES
+#FACULTY OFFICES
     [[98], [54.58629381455676, -5.935567924057082]],#Arts, Humanities and Social Sciences #168
     [[173], [54.58242405458074, -5.937056795100541]],#Engineering and Physical Sciences #169
     [[67, 68], [54.585059641312405, -5.940966659119539]],#Medicine, Health and Life Sciences #170
-    #SCHOOL OFFICES  
+#SCHOOL OFFICES  
     [[41], [54.58576124307094, -5.935888914346184]],#Arts, English and Languages #171
     [[122], [54.581204721059905, -5.936039256622704]],#Chemistry and Chemical Engineering #172
     [[119, 169], [54.58187878256887, -5.937437179303816]],#Electronics, Electrical Engineering and Computer Science #173
@@ -309,17 +310,13 @@ road_network = [
     [[31], [54.585487641335426, -5.934184670309235]],#The Senator George J Mitchell Institute for Global Peace, Security and Justice #185
     [[157, 183], [54.57617014154859, -5.935100555729443]],#The William J Clinton Leadership Institute #186
     [[148, 158], [54.580479444858256, -5.9373473784700375]],#The Institute for Global Food Security #187
-    [[], [54.614029465909745, -5.89993074581833]],#The Institute of Electronics, Communications and Information Technology (Titanic Quarter) #188
-    [[135], [54.58663012747263, -5.946840979530259]]#The Institute of Health Sciences #189
+    [[135], [54.58663012747263, -5.946840979530259]]#The Institute of Health Sciences #188
 ]
 
-
 room_numbers = [
-    [['latitude, longitude'], [['room number'], ['room name']]]
+    [[54.580530653927234, -5.93777668187978], [[[-1], ["LG008", "LG009", "LG0010", "LG018", "LG021", "LG022", "LG023", "LG024", "LG025", "LG026", "LG029", "LG030", "LG031", "LG032"]]]]
     ]
 
-
-##########################################################################################################################################
 
 #Time since epoch, used to generate a random file name for the map
 def millisecondsSinceEpoch():
@@ -329,28 +326,24 @@ def millisecondsSinceEpoch():
 def deleteOldMapFiles():
     current_time = time.time()
     one_day_ago = current_time - 24 * 60 * 60  # 24 hours ago
-
-    for root, files in os.walk(map_folder):
+    for root, dirs, files in os.walk(map_folder):
         for file in files:
             file_path = os.path.join(root, file)
             file_creation_time = os.path.getctime(file_path)
-
             if file_creation_time < one_day_ago:
                 os.remove(file_path)
-                print('file deleted')
+                #print('file deleted')
 
 #find distance between the nodes
 def haversineDistance(lat1, long1, lat2, long2):
-    #Convert latitude and longitude from degrees to radians
+#Convert latitude and longitude from degrees to radians
     lat1 = math.radians(lat1)
     long1 = math.radians(long1)
     lat2 = math.radians(lat2)
     long2 = math.radians(long2)
-
-    #Haversine formula
+#Haversine formula
     distance = math.acos(math.sin(lat1) * math.sin(lat2) + math.cos(lat1) * math.cos(lat2) * math.cos(long2 - long1))
-
-    #Convert the result from radians to the desired distance unit (e.g., kilometers or miles)
+#Convert the result from radians to the desired distance unit (e.g., kilometers or miles)
     radius_of_earth = 6371
     distance_in_km = radius_of_earth * distance
     return distance_in_km
@@ -372,7 +365,7 @@ def dijkstra(start_node, end_node):
                     distances[neighbor] = distance
                     previous_nodes[neighbor] = current_node
         visited.add(current_node)
-    path = []
+    path = [] 
     current = end_node
     total_distance = 0
     while current is not None:
@@ -389,50 +382,68 @@ def coordinateOfNode(road_network, latitude, longitude):
             return road_network.index(entry)
     return None
 
-##########################################################################################################################################
+#Function for floos and room numbers
+def floorsAndRooms(destination_latitude, destination_longitude, result):
+    global room_numbers
+#Getting the data for each entry
+    for entry in room_numbers:
+        coordinates = entry[0]
+        rooms_info = entry[1]
+#Check if the current entry's coordinates match the destination
+        if coordinates[0] == destination_latitude and coordinates[1] == destination_longitude:
+#Displaying floor and room information
+            result += "<table>"
+            result += "<tr><th>floor&nbsp;</th><th>&nbsp;rooms</th></tr>"
+            for floor, rooms in rooms_info:
+                floor_number = floor[0]
+                room_numbers_str = ', '.join(map(str, rooms))
+                result += f"<tr><td>{floor_number}</td><td>{room_numbers_str}</td></tr>"
+            result += "</table>"
+    return result
 
-#Set location
-@app.route('/set_location', methods=['POST'])
-def set_location():
-    global your_latitude, your_longitude, selected_location_name
-    if request.method == 'POST':
-        selected_location_name = request.form['location']
-        for location in locations:
-            if location[0][0] == selected_location_name:
-                your_latitude, your_longitude = location[1]
-                print(your_latitude, your_longitude)
-                break
-    return ('', 204)
 
-#Set destination
-@app.route('/set_destination', methods=['POST'])
-def set_destination():
-    global destination_latitude, destination_longitude, selected_destination_name
-    if request.method == 'POST':
-        selected_destination_name = request.form['destination']
-        for destination in locations:
-            if destination[0][0] == selected_destination_name:
-                destination_latitude, destination_longitude = destination[1]
-                print(destination_latitude, destination_longitude)
-                break
-    return redirect('/map')
 
 #Function to get the live location
 @app.route('/get_location', methods=['POST'])
 def get_location():
-    global your_latitude, your_longitude, live_location
+    global start_latitude, start_longitude, live_location
     data = request.get_json()
     user_location = data.get('location')
-    
-    #Store the user's location coordinates in the global variables
-    your_latitude = user_location['latitude']
-    your_longitude = user_location['longitude']
+#Store the user's location coordinates in the global variables
+    start_latitude = user_location['latitude']
+    start_longitude = user_location['longitude']
     live_location = True
-
-    #Flask always wants you to return something
+#Flask always wants you to return something
     return ('', 204)
 
-##########################################################################################################################################
+#Function to set start and end locations
+@app.route('/set', methods=['POST'])
+def set_location():
+    global start_latitude, start_longitude, start_name, destination_latitude, destination_longitude, destination_name
+    if request.method == 'POST':
+        start_name = request.form['location']
+        #print(start_name)
+        destination_name = request.form['destination']
+        #print(destination_name)
+        if start_name == '':
+            for destination in locations:
+                if destination[0][0] == destination_name:
+                    destination_latitude, destination_longitude = destination[1]
+                    #print(destination_latitude, destination_longitude)
+                    break
+        else:
+            for location in locations:
+                if location[0][0] == start_name:
+                    start_latitude, start_longitude = location[1]
+                    #print(start_latitude, start_longitude)
+                    break
+            for destination in locations:
+                if destination[0][0] == destination_name:
+                    destination_latitude, destination_longitude = destination[1]
+                    #print(destination_latitude, destination_longitude)
+                    break
+    return redirect('/Mymap')
+
 
 #Home route
 @app.route('/')
@@ -452,35 +463,51 @@ def wholeMap():
     return render_template('wholeMap.html')
 
 #Map route
-@app.route('/map')
-def map():
+@app.route('/Mymap')
+def Mymap():
     deleteOldMapFiles()
-
-    #Location
-    global your_latitude, your_longitude, destination_latitude, destination_longitude, global_id, selected_location_name, selected_destination_name, live_location
+#Location
+    global start_latitude, start_longitude, destination_latitude, destination_longitude, global_id, start_name, destination_name, live_location, speed
+#Create a new map centred around the location
+    campus_map = folium.Map(location=[start_latitude, start_longitude], zoom_start=15, zoom_control=False, max_bounds=True)
     
-    #Create a new map centred around the location
-    campus_map = folium.Map(location=[your_latitude, your_longitude], zoom_start=15, zoom_control=False)
+#Function to join live location onto the map network
+    def find_closest_node(latitude, longitude):
+        closest_node = None
+        min_distance = float('inf')
+        for i, node_info in enumerate(road_network):
+            node_coords = node_info[1]
+            distance = haversineDistance(latitude, longitude, node_coords[0], node_coords[1])
+            if distance < min_distance:
+                closest_node = i + 1  #Adjust for the array index starting from 1
+                min_distance = distance
+        return closest_node
 
     if live_location == True:
-        start = 1 #someway to use live location here - find nearest node to live location, then set that node as the start and proceed as usual
+        start = find_closest_node(start_latitude, start_longitude)
         end = coordinateOfNode(road_network, destination_latitude, destination_longitude)
-        #Adjusment for the array
+#Adjusment for the array
         end = end + 1
-
-
+        coords1 = [start_latitude, start_longitude]
+        coords2 = road_network[start - 1][1]
+        folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
 
     elif live_location == False:
-        start = coordinateOfNode(road_network, your_latitude, your_longitude)
+        start = coordinateOfNode(road_network, start_latitude, start_longitude)
         end = coordinateOfNode(road_network, destination_latitude, destination_longitude)
-        #Adjusment for the array
+#Adjusment for the array
         start = start + 1
         end = end + 1
-
+    
+    #print(start)
+    #print(end)
     path, total_distance = dijkstra(start, end)
-    print(total_distance)
+#Round total_distnace to 2 decimal places
+    total_distance = round(total_distance, 2)
+#Total time rounded to 1 decimal places
+    total_time = round(((total_distance / speed) * 60), 1)
 
-    #Add lines to represent road connections in the shortest path
+#Add lines to represent road connections in the shortest path
     for i in range(len(path) - 1):
         current_node = path[i]
         next_node = path[i + 1]
@@ -488,39 +515,46 @@ def map():
         coords2 = road_network[next_node - 1][1]
         folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
 
-    #Adding markers for location and desitnation
-    folium.Marker([your_latitude, your_longitude], popup='Your location').add_to(campus_map)
-    folium.Marker([destination_latitude, destination_longitude], popup=selected_destination_name).add_to(campus_map)
+#Getting floor and room numbers of destination
+    RoomAndFloor = floorsAndRooms(destination_latitude, destination_longitude, result)
+ 
+#Adding markers for location and desitnation 
+    folium.Marker([start_latitude, start_longitude], popup='Your location').add_to(campus_map)
+    folium.Marker([destination_latitude, destination_longitude], popup=folium.Popup(RoomAndFloor, max_width=300)).add_to(campus_map)
 
-    #Generate the file name
+#Generate the file name
     global_id = millisecondsSinceEpoch()
     html_filename = f'{global_id}.html'
     html_file_path = os.path.join(map_folder, html_filename)
 
-    #Save the destination and current location to the map
+#Save the destination and current location to the map
     campus_map.save(html_file_path)
 
-    #Adding navigation bar to the generated map
-    #Read the content of navbar.html
+#Adding navigation bar to the generated map
+#Read the content of navbar.html
     navbar_file_path = os.path.join('templates', 'navbar.html')
     with open(navbar_file_path, 'r') as navbar_file:
         navbar_contents = navbar_file.read()
-    #Read the content of the generated map and add navbar to the top of the generated map page
+#Add total distance to the navbar
+    navbar_contents = navbar_contents.replace('{{ total_distance }}', f'Distance to destination: {total_distance} km')
+#Add total time to the navbar
+    navbar_contents = navbar_contents.replace('{{ total_time }}', f'Time to reach destination: {total_time} minutes')
+    
+#Read the content of the generated map and add navbar to the top of the generated map page
     with open(html_file_path, 'r') as map_file:
         map_contents = map_file.read()
         combined_contents = navbar_contents + map_contents
-    #Save the combined content to the global_id file
+#Save the combined content to the global_id file
     with open(html_file_path, 'w') as destination_file:
         destination_file.write(combined_contents)
 
-    #Set live_location as false for next time
+#Set live_location as false for next time
     live_location = False
     
-    #Render the map
+#Render the map
     return send_file(os.path.join(map_folder, html_filename))
 
-##########################################################################################################################################
 
 if __name__ == '__main__':
-    #Start the Flask app 
+#Start the Flask app 
     app.run(host='0.0.0.0', port=443, debug=True, ssl_context='adhoc')

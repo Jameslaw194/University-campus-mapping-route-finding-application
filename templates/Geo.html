@@ -11,24 +11,21 @@
 </head>
 
 <body>
-
     <div class="topnav">
         <a href="/">Home</a>
         <a href="/location">Plot your route</a>
     </div>
-
     <div class="container" style="padding-top: 20px;">
         <h1>Options for Map</h1>
         <p id="geo"></p>
     </div>
-
+<!--Live location-->
     <div class="container" style="padding-top: 20px;">
         <label class="form-check-label">Use live location : </label><input class="form-check-input" type="checkbox" id="Check" onclick="getLiveLocation()"><br>
     </div>
-
-<!--Dropdown box OR live location for location-->
+<!--Dropdown box-->
     <div class="container" style="padding-top: 20px;">
-        <form method="POST" action="/set_location">
+        <form method="POST" action="/set">
             <div class="form-group">
                 <label for="location-select">Or select your location:</label>
                 <select name="location" class="form-control" id="location-select">
@@ -36,13 +33,6 @@
                         <option value="{{ entry[0][0] }}">{{ entry[0][0] }}</option>
                     {% endfor %}
                 </select>
-            </div>
-        </form>
-    </div>
-<!--Dropdown box for destination-->
-    <div class="container" style="padding-top: 20px;">
-        <form method="POST" action="/set_destination">
-            <div class="form-group">
                 <label for="destination-select">Select your destination:</label>
                 <select name="destination" class="form-control" id="destination-select">
                     {% for entry in locations %}
@@ -58,27 +48,23 @@
     </div>
 
     <script>
-
         const x = document.getElementById("geo");
         function getLiveLocation() {
-            //Get the checkbox
+//Get the checkbox
             var checkBox = document.getElementById("Check");
-
-            //If the checkbox is checked, get geo-location
+//If the checkbox is checked, get geo-location
             if (checkBox.checked == true){
 
                 if (navigator.geolocation) {
                     navigator.geolocation.watchPosition(function (position) {
-
-                        //Create a JSON object with the location data
+//Create a JSON object with the location data
                         const locationData = {
                             location: {
                                 latitude: position.coords.latitude,
                                 longitude: position.coords.longitude
                             }
                         };
-
-                        //Send a POST request to your Flask server to save the location data
+//Send a POST request to your Flask server to save the location data
                         fetch('/get_location', {
                             method: 'POST',
                             headers: {
@@ -91,15 +77,18 @@
                             console.error('Error:', error);
                         });
                     }, showError);
-                    //Tell user they cant use live location as their browser cant support it
-                } else {
+//Tell user they cant use live location as their browser cant support it
+                } 
+                else {
                     x.innerHTML = "Live location is not supported by this browser.";
-                //If checkbox is not checked, tell user
-                }} else{
+//If checkbox is not checked, tell user
+                }
+            } 
+                else{
                     x.innerHTML = "Live location is disabelled."
                 }
         }
-        //Error messages
+//Error messages
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
@@ -116,23 +105,20 @@
                     break;
             }
         }
-        
+//Function to submit forms for location and destination
         function confirm() {
             var useLiveLocation = document.getElementById('Check').checked;
+            var locationSelect = document.getElementById('location-select');
+            var destinationSelect = document.getElementById('destination-select');
             if (useLiveLocation) {
-                //If live location is selected, submit the destination form only
-                document.getElementById('destination-select').form.submit();
+//If live location is selected, set a specific value for the location and submit the form
+                locationSelect.value = '';
+                destinationSelect.form.submit();
             } else {
-                //If live location is not selected, submit the location form first
-                document.getElementById('location-select').form.submit();
-                //Submit the destination form after a slight delay
-                setTimeout(function() {
-                    document.getElementById('destination-select').form.submit();
-                }, 500);
+//If live location is not selected, submit the form
+                locationSelect.form.submit();
             }
         }
-
-
 
     </script>
 </body>
