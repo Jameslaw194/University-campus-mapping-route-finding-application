@@ -1,27 +1,25 @@
 #Import libaries
-from flask import Flask, request, render_template, send_file, redirect
+from flask import Flask, request, render_template, send_file, redirect, send_from_directory, url_for
 import folium
 import os
 import time
 import math
-import branca
-
 
 #Define app and the folder directorys for templates, static and unique maps
 app = Flask(__name__, template_folder='templates', static_folder='static')
+#Directory to save maps to
 map_folder = os.path.join(app.root_path, 'cached maps')
+#Favicon.ico directory
+favicon_directory = os.path.join(app.root_path, 'static')
 
-
-#Initilise start and end positions
+#Initilise start latitude and longitude
 start_latitude = None
 start_longitude = None
 start_name = ''
-
+#Initilise destination latitude and longitude
 destination_latitude = None
 destination_longitude = None
 destination_name = ''
-#ID used for map name generation
-global_id = None
 #live_location inisitialise as false
 live_location = False
 #Google maps average walking speed in kmh
@@ -117,8 +115,6 @@ locations = [
     [['The Institute of Health Sciences'], [54.58663012747263, -5.946840979530259]],
     [[''], [0, 0]]
 ]
-
-
 
 road_network = [
     [[82, 6, 15, 16, 17], [54.58319268940053, -5.936868755846738]],#1
@@ -310,25 +306,26 @@ road_network = [
     [[82], [54.58116272803322, -5.937930621647734]],#Psychology #182
     [[186], [54.57628570307882, -5.935233726404529]],#Queens Business School #183
     [[48], [54.58576463882744, -5.931447405599344]],#Social Sciences, Education and Social Work #184
-#GLOBAL RESEARCH INSTITUTES
+    #GLOBAL RESEARCH INSTITUTES
     [[31], [54.585487641335426, -5.934184670309235]],#The Senator George J Mitchell Institute for Global Peace, Security and Justice #185
     [[157, 183], [54.57617014154859, -5.935100555729443]],#The William J Clinton Leadership Institute #186
     [[148, 158], [54.580479444858256, -5.9373473784700375]],#The Institute for Global Food Security #187
     [[135], [54.58663012747263, -5.946840979530259]]#The Institute of Health Sciences #188
 ]
 
-
-
 room_numbers = [
-    [[54.580530653927234, -5.93777668187978], [[[-1], ["LG008", "LG009", "LG0010", "LG018", "LG021", "LG022", "LG023", "LG024", "LG025", "LG026", "LG029", "LG030", "LG031", "LG032"]]]]
+    [[54.580530653927234, -5.93777668187978], [[[-1], ['LG008:Sonic Lab Door', 'LG018:Kitchen', 'LG021:Surround 1 outer', 'LG022:Surround 1 inner', 'LG023:VR Edit Suite', 'LG024:Studio 3', 'LG025:Studio 2', 'LG026:Studio 1', 'LG029:Surround 2', 'LG030:Broadcast A', 'LG031:Broacast B', 'LG032:Broadcast Studio']],
+     [[0], ['0G007:Kitchen', '0G023:MultiMedia', '0G008:Sonic Lab', '0G012:School Office', '0G013:Equipment Store', '0G019:Michael Alcorn', '0G020:Aisling McGeown', '0G021:Craig Jackson', '0G022:Jonny McGuinness', '0G025:Small store', '0G028a:Instrument Store', '0G029:Computer Suite', '0G030 a:Side Door to Lab', '0G030 c:Beside Control Room', '0G031:Control Room']],
+     [[1], ['01011:Comms Room', '01016:Kitchen', '01019:Store', '01020:Computer Suite', '01027:Simons', '01028:Post Docs Corner Office', '01029:hardrain', '01031:Abhiram Bhanuprokash']],
+     [[2], ['02018:Store', '02020:Una Monaghan', '02021:Maarten Van', '02022:Trevor A', '02023:Pedro R', '02024:Chris C', '02025B:Interaction Lab', '02026:Control Room', '02028:Lazer Cutter Room', '02029:Fab Lab', '02030:Miguel Ortiz', '02031:Paul S', '02032:Simon W']],
+     [[3],['03007:Kitchen','03009:Store','03011:Door to offices','03012:John D','03013:Gabriela M','03014:Dons','03015:Frank D','03016:Elena C','3018A:Empty Office/Storage','3018B:Edit Suite','03020:Computer Overflow Lab','03021:Computer suite','03022:3rd Floor Back Stairs']]]]
     ]
-
-
 
 
 #Time since epoch, used to generate a random file name for the map
 def millisecondsSinceEpoch():
     return int(time.time() * 1000) #*1000 to turn into milliseconds
+
 
 #Clean up old files
 def deleteOldMapFiles():
@@ -340,21 +337,27 @@ def deleteOldMapFiles():
             file_creation_time = os.path.getctime(file_path)
             if file_creation_time < one_day_ago:
                 os.remove(file_path)
-                print('file deleted')
+
 
 #find distance between the nodes
 def haversineDistance(lat1, long1, lat2, long2):
-    #Convert latitude and longitude from degrees to radians
+    #convert latitude and longitude from degrees to radians
     lat1 = math.radians(lat1)
     long1 = math.radians(long1)
     lat2 = math.radians(lat2)
     long2 = math.radians(long2)
-    #Haversine formula
-    distance = math.acos(math.sin(lat1) * math.sin(lat2) + math.cos(lat1) * math.cos(lat2) * math.cos(long2 - long1))
-    #Convert the result from radians to the desired distance unit (e.g., kilometers or miles)
+    #difference in coordinates
+    delta_lat = lat2 - lat1
+    delta_long = long2 - long1
+    #haversine formula
+    a = math.sin(delta_lat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(delta_long/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    #radius of the Earth in kilometers
     radius_of_earth = 6371
-    distance_in_km = radius_of_earth * distance
-    return distance_in_km
+    #calculate the distance
+    distance = radius_of_earth * c
+    return distance
+
 
 #dijkstra algorithm
 def dijkstra(start_node, end_node):
@@ -383,14 +386,15 @@ def dijkstra(start_node, end_node):
         current = previous_nodes[current]
     return path, total_distance
 
-#find what node is used from the start and end coordinates
+
+#Find what node is used from the start and end coordinates
 def coordinateOfNode(road_network, latitude, longitude):
     for entry in road_network:
         if entry[1] == [latitude, longitude]:
             return road_network.index(entry)
     return None
 
-#Function for floos and room numbers
+
 def floorsAndRooms(destination_latitude, destination_longitude, result):
     global room_numbers
     #Getting the data for each entry
@@ -400,8 +404,14 @@ def floorsAndRooms(destination_latitude, destination_longitude, result):
         #Check if the current entry's coordinates match the destination
         if coordinates[0] == destination_latitude and coordinates[1] == destination_longitude:
             #Displaying floor and room information
+            result += "<style>"
+            result += "table {width: 100%; border-collapse: collapse;}"
+            result += "th, td {border: 1px solid #ddd; padding: 8px;}"
+            result += "tr:nth-child(even) {background-color: #f2f2f2;}"
+            result += "th {padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #4CAF50; color: white;}"
+            result += "</style>"
             result += "<table>"
-            result += "<tr><th>floor&nbsp;</th><th>&nbsp;rooms</th></tr>"
+            result += "<tr><th>floor</th><th>rooms</th></tr>"
             for floor, rooms in rooms_info:
                 floor_number = floor[0]
                 room_numbers_str = ', '.join(map(str, rooms))
@@ -410,11 +420,12 @@ def floorsAndRooms(destination_latitude, destination_longitude, result):
     return result
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(favicon_directory, 'favicon.ico')
 
 
-
-
-#Function to get the live location
+#Function/route to get the live location
 @app.route('/get_location', methods=['POST'])
 def get_location():
     global start_latitude, start_longitude, live_location
@@ -424,44 +435,43 @@ def get_location():
     start_latitude = user_location['latitude']
     start_longitude = user_location['longitude']
     live_location = True
-    #Flask always wants you to return something
     return ('', 204)
 
 
+#Function/route to set the users start and destination positions
 @app.route('/set', methods=['POST'])
 def set_location():
     global start_latitude, start_longitude, start_name, destination_latitude, destination_longitude, destination_name
+    #If POST request from form is sent
     if request.method == 'POST':
         start_name = request.form['location']
-        print(start_name)
         destination_name = request.form['destination']
-        print(destination_name)
+        #If live location is being used, only set destination
         if start_name == '':
             for destination in locations:
                 if destination[0][0] == destination_name:
                     destination_latitude, destination_longitude = destination[1]
-                    print(destination_latitude, destination_longitude)
-                    break
+                    return redirect('/Mymap')
+        #IF live location is NOT being used, set start and destination
         else:
             for location in locations:
                 if location[0][0] == start_name:
                     start_latitude, start_longitude = location[1]
-                    print(start_latitude, start_longitude)
                     break
             for destination in locations:
                 if destination[0][0] == destination_name:
                     destination_latitude, destination_longitude = destination[1]
-                    print(destination_latitude, destination_longitude)
-                    break
-    return redirect('/Mymap')
+                    return redirect('/Mymap')
+    else:
+        return redirect('/')    #If error, break, go to home page
 
 
-    
 #Home route
 @app.route('/')
 def home():
     deleteOldMapFiles()
     return render_template('home.html')
+
 
 #Location route
 @app.route('/location')
@@ -469,20 +479,27 @@ def location():
     deleteOldMapFiles()
     return render_template('Geo.html', locations=locations)
 
+
 #Show map with every point route
 @app.route('/wholemap')
 def wholeMap():
     return render_template('wholeMap.html')
 
+
 #Map route
 @app.route('/Mymap')
 def Mymap():
-    deleteOldMapFiles()
     #Location
-    global start_latitude, start_longitude, destination_latitude, destination_longitude, global_id, start_name, destination_name, live_location, speed
+    global html_filename, start_latitude, start_longitude, destination_latitude, destination_longitude, start_name, destination_name, live_location, speed
     #Create a new map centred around the location
-    campus_map = folium.Map(location=[start_latitude, start_longitude], zoom_start=15, zoom_control=False, max_bounds=True)
-    
+    campus_map = folium.Map(location=[start_latitude, start_longitude], 
+                            zoom_start=15, 
+                            zoom_control=False, 
+                            max_bounds=True,
+                            control_scale=True,
+                            prefer_canvas=True,
+                            tap=False
+                            )  
     #Function to join live location onto the map network
     def find_closest_node(latitude, longitude):
         closest_node = None
@@ -512,14 +529,10 @@ def Mymap():
         start = start + 1
         end = end + 1
     
-    print(start)
-    print(end)
     path, total_distance = dijkstra(start, end)
-    #Round total_distnace to 2 decimal places
-    total_distance = round(total_distance, 2)
-    
-    #Total time rounded to 1 decimal places
-    total_time = round(((total_distance / speed) * 60), 1)
+    total_distance = round(total_distance, 2)    #Round total_distnace to 2 decimal places
+    total_time = round(((total_distance / speed) * 60), 1)    #Total time rounded to 1 decimal places
+
 
     #Add lines to represent road connections in the shortest path
     for i in range(len(path) - 1):
@@ -531,20 +544,19 @@ def Mymap():
 
     #Getting floor and room numbers of destination
     RoomAndFloor = floorsAndRooms(destination_latitude, destination_longitude, result)
- 
+
     #Adding markers for location and desitnation 
-    folium.Marker([start_latitude, start_longitude], popup='Your location').add_to(campus_map)
-    folium.Marker([destination_latitude, destination_longitude], popup=folium.Popup(RoomAndFloor, max_width=300)).add_to(campus_map)
+    folium.Marker([start_latitude, start_longitude], popup=folium.Popup(f'<font color="#1a33f0">Your location.</font><br>{start_name}')).add_to(campus_map)
+    folium.Marker([destination_latitude, destination_longitude], popup=folium.Popup(f'<font color="#ff000d">Your Destination.</font><br>{destination_name}<br>{RoomAndFloor}', max_width=300), lazy=True).add_to(campus_map)
 
     #Generate the file name
-    global_id = millisecondsSinceEpoch()
-    html_filename = f'{global_id}.html'
+    html_filename = f'{millisecondsSinceEpoch()}.html'
     html_file_path = os.path.join(map_folder, html_filename)
 
     #Save the destination and current location to the map
     campus_map.save(html_file_path)
 
-    #Adding navigation bar to the generated map
+    #Adding information and navbar to the generated map
     #Read the content of navbar.html
     navbar_file_path = os.path.join('templates', 'navbar.html')
     with open(navbar_file_path, 'r') as navbar_file:
@@ -553,23 +565,23 @@ def Mymap():
     navbar_contents = navbar_contents.replace('{{ total_distance }}', f'Distance to destination: {total_distance} km')
     #Add total time to the navbar
     navbar_contents = navbar_contents.replace('{{ total_time }}', f'Time to reach destination: {total_time} minutes')
-    
+
     #Read the content of the generated map and add navbar to the top of the generated map page
     with open(html_file_path, 'r') as map_file:
         map_contents = map_file.read()
         combined_contents = navbar_contents + map_contents
-    #Save the combined content to the global_id file
     with open(html_file_path, 'w') as destination_file:
-        destination_file.write(combined_contents)
+        destination_file.write(combined_contents)    #Save the combined content to the global_id file
+    live_location = False        #Set live_location as false for next time
+    return redirect(url_for('showMap', html_filename=html_filename))
 
-    #Set live_location as false for next time
-    live_location = False
-    
-    #Render the map
-    return send_file(os.path.join(map_folder, html_filename))
-
+@app.route('/<html_filename>')
+def showMap(html_filename):
+    deleteOldMapFiles()
+    return send_file(os.path.join(map_folder, f'{html_filename}'))
 
 
 if __name__ == '__main__':
     #Start the Flask app 
-    app.run(host='0.0.0.0', port=443, debug=True, ssl_context='adhoc')
+    app.run(host='0.0.0.0', port=443, debug=True, ssl_context=("cert.pem", "privkey.pem"))
+

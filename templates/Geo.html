@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <title>Queens Campus Map</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,26 +8,20 @@
     <link rel="stylesheet" type="text/css" href="static/styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 </head>
-
 <body>
-
     <div class="topnav">
         <a href="/">Home</a>
         <a href="/location">Plot your route</a>
     </div>
-
     <div class="container" style="padding-top: 20px;">
         <h1>Options for Map</h1>
         <p id="geo"></p>
     </div>
-
     <div class="container" style="padding-top: 20px;">
         <!--Live location-->
         <label class="form-check-label">Use live location : </label><input class="form-check-input" type="checkbox" id="Check" onclick="getLiveLocation()"><br>
     </div>
-
 <!--Dropdown box-->
     <div class="container" style="padding-top: 20px;">
         <form method="POST" action="/set">
@@ -49,15 +42,13 @@
             </div>
         </form>
     </div>
-
 <!--Confirm choices for the map-->
     <div class="container" style="padding-top: 20px;">
-        <button class="btn btn-primary" type="button" onclick="confirm()">Confirm choices</button>
+        <button class="btn btn-primary" type="button" onclick="confirm()" style="background-color:#cc1919;">Confirm choices</button>
+        
     </div>
 
-
     <script>
-
         const x = document.getElementById("geo");
         function getLiveLocation() {
             //Get the checkbox
@@ -98,7 +89,7 @@
                 }
             } 
                 else{
-                    x.innerHTML = "Live location is disabelled."
+                    x.innerHTML = "Live location is disabled."
                 }
         }
 
@@ -106,7 +97,7 @@
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation."
+                    x.innerHTML = "Live location is disabelled"
                     break;
                 case error.POSITION_UNAVAILABLE:
                     x.innerHTML = "Location information is unavailable."
@@ -133,11 +124,7 @@
                 // If live location is not selected, submit both location and destination forms
                 locationSelect.form.submit();
             }
-        }
-        
-        
-
-    
+        }   
 
 </script>
 </body>
