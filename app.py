@@ -1,34 +1,15 @@
 #Import libaries
 from flask import Flask, request, render_template, send_file, redirect, send_from_directory, url_for
+from datetime import datetime, timedelta
 import folium
 import os
 import time
 import math
 
-#Define app and the folder directorys for templates, static and unique maps
-app = Flask(__name__, template_folder='templates', static_folder='static')
-#Directory to save maps to
-map_folder = os.path.join(app.root_path, 'cached maps')
-#Favicon.ico directory
-favicon_directory = os.path.join(app.root_path, 'static')
 
-#Initilise start latitude and longitude
-start_latitude = None
-start_longitude = None
-start_name = ''
-#Initilise destination latitude and longitude
-destination_latitude = None
-destination_longitude = None
-destination_name = ''
-#live_location inisitialise as false
-live_location = False
-#Google maps average walking speed in kmh
-speed = 4.8
-#Initilise total distance
-result = str()
 
 locations = [
-    #LOCATION
+    {'breaker': '----Locations----'},
     [['Academic and Student Affairs'], [54.58437403687632, -5.933474677076396]],
     [['Administration Building'], [54.58452736772177, -5.93327688374742]],
     [['Ashby Building'], [54.58007433547152, -5.935592059498496]],
@@ -39,7 +20,6 @@ locations = [
     [['Chrono Centre'], [54.58584299729627, -5.939615333596722]],
     [['Clinical Research Facility'], [54.587753736693344, -5.9422366884135505]],
     [['Computer Science '], [54.58169894475783, -5.9376482843028935]],
-    [['Student Wellbeing Service'], [54.58456772091219, -5.937142952814181]],
     [['David Bates Building'], [54.58384686447296, -5.93126108767134]],
     [['David Keir Building'], [54.58117060439069, -5.93602525318017]],
     [['Development and Alumni Relations'], [54.584677822431985, -5.935106200999247]],
@@ -70,6 +50,7 @@ locations = [
     [['Northern Ireland Technology Centre (NITC)'], [54.58042280920047, -5.93707170772201]],
     [['Occupational Health and Safety Services'], [54.578523068300605, -5.937947913574511]],
     [['Old Physics Building'], [54.58376844134731, -5.9348406585386035]],
+    [['One Elmwood, Student Centre and Students Union'], [54.58455626384715, -5.937126707190225]],
     [['Peter Froggatt Centre (PFC)'], [54.58470105949851, -5.9334766034009006]],
     [['Pharmacy Building'], [54.586329469218455, -5.942700637129458]],
     [['Physical Education Centre (PEC)'], [54.58109000876869, -5.929670225916936]],
@@ -80,7 +61,7 @@ locations = [
     [['Sonic Arts Research Centre (SARC)'], [54.580530653927234, -5.93777668187978]],
     [['South Dining Hall'], [54.58375784064992, -5.935614140012404]],
     [['Student Plus '], [54.58421618149038, -5.935216171561602]],
-    [['One Elmwood, Student Centre and Students Union'], [54.58455626384715, -5.937126707190225]],
+    [['Student Wellbeing Service'], [54.58456772091219, -5.937142952814181]],
     [['The McClay Library'], [54.5838034291948, -5.932109316417613]],
     [['University Health Centre'], [54.58398355243926, -5.937445814805631]],
     [['Vice-Chancellors Office'], [54.58433897538085, -5.93529395561524]],
@@ -88,11 +69,11 @@ locations = [
     [['Whitla Hall'], [54.58371597203839, -5.9360391443710725]],
     [['Whitla Medical Building'], [54.5859453835362, -5.9435628928809185]],
     [['Wellcome-Wolfson Institute for Experimental Medicine'], [54.5861396452996, -5.944647615604617]],
-    #FACULTY OFFICES
+    {'breaker': '----Faculty Offices----'},
     [['Arts, Humanities and Social Sciences'], [54.58629381455676, -5.935567924057082]],
     [['Engineering and Physical Sciences'], [54.58242405458074, -5.937056795100541]],
     [['Medicine, Health and Life Sciences'], [54.585059641312405, -5.940966659119539]],
-    #SCHOOL OFFICES
+    {'breaker': '----School Offices----'},
     [['Arts, English and Languages'], [54.58576124307094, -5.935888914346184]],
     [['Chemistry and Chemical Engineering'], [54.581204721059905, -5.936039256622704]],
     [['Electronics, Electrical Engineering and Computer Science'], [54.58187878256887, -5.937437179303816]],
@@ -107,7 +88,7 @@ locations = [
     [['Psychology'], [54.58116272803322, -5.937930621647734]],
     [['Queens Business School'], [54.57628570307882, -5.935233726404529]],
     [['Social Sciences, Education and Social Work'], [54.58576463882744, -5.931447405599344]],
-    #GLOBAL RESEARCH INSTITUTES
+    {'breaker': '----Global Research Institutes----'},
     [['The Senator George J Mitchell Institute for Global Peace, Security and Justice'], [54.585487641335426, -5.934184670309235]],
     [['The William J Clinton Leadership Institute'], [54.57617014154859, -5.935100555729443]],
     [['The Institute for Global Food Security'], [54.580479444858256, -5.9373473784700375]],
@@ -115,6 +96,7 @@ locations = [
     [['The Institute of Health Sciences'], [54.58663012747263, -5.946840979530259]],
     [[''], [0, 0]]
 ]
+
 
 road_network = [
     [[82, 6, 15, 16, 17], [54.58319268940053, -5.936868755846738]],#1
@@ -313,6 +295,7 @@ road_network = [
     [[135], [54.58663012747263, -5.946840979530259]]#The Institute of Health Sciences #188
 ]
 
+
 room_numbers = [
     [[54.580530653927234, -5.93777668187978], [[[-1], ['LG008:Sonic Lab Door', 'LG018:Kitchen', 'LG021:Surround 1 outer', 'LG022:Surround 1 inner', 'LG023:VR Edit Suite', 'LG024:Studio 3', 'LG025:Studio 2', 'LG026:Studio 1', 'LG029:Surround 2', 'LG030:Broadcast A', 'LG031:Broacast B', 'LG032:Broadcast Studio']],
      [[0], ['0G007:Kitchen', '0G023:MultiMedia', '0G008:Sonic Lab', '0G012:School Office', '0G013:Equipment Store', '0G019:Michael Alcorn', '0G020:Aisling McGeown', '0G021:Craig Jackson', '0G022:Jonny McGuinness', '0G025:Small store', '0G028a:Instrument Store', '0G029:Computer Suite', '0G030 a:Side Door to Lab', '0G030 c:Beside Control Room', '0G031:Control Room']],
@@ -321,267 +304,342 @@ room_numbers = [
      [[3],['03007:Kitchen','03009:Store','03011:Door to offices','03012:John D','03013:Gabriela M','03014:Dons','03015:Frank D','03016:Elena C','3018A:Empty Office/Storage','3018B:Edit Suite','03020:Computer Overflow Lab','03021:Computer suite','03022:3rd Floor Back Stairs']]]]
     ]
 
-
-#Time since epoch, used to generate a random file name for the map
-def millisecondsSinceEpoch():
-    return int(time.time() * 1000) #*1000 to turn into milliseconds
-
-
-#Clean up old files
-def deleteOldMapFiles():
-    current_time = time.time()
-    one_day_ago = current_time - 24 #* 60 * 60  # 24 hours ago
-    for root, dirs, files in os.walk(map_folder):
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_creation_time = os.path.getctime(file_path)
-            if file_creation_time < one_day_ago:
-                os.remove(file_path)
-
-
-#find distance between the nodes
-def haversineDistance(lat1, long1, lat2, long2):
-    #convert latitude and longitude from degrees to radians
-    lat1 = math.radians(lat1)
-    long1 = math.radians(long1)
-    lat2 = math.radians(lat2)
-    long2 = math.radians(long2)
-    #difference in coordinates
-    delta_lat = lat2 - lat1
-    delta_long = long2 - long1
-    #haversine formula
-    a = math.sin(delta_lat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(delta_long/2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    #radius of the Earth in kilometers
-    radius_of_earth = 6371
-    #calculate the distance
-    distance = radius_of_earth * c
-    return distance
-
-
-#dijkstra algorithm
-def dijkstra(start_node, end_node):
-    distances = {node: float('inf') for node in range(1, len(road_network) + 1)}
-    previous_nodes = {node: None for node in range(1, len(road_network) + 1)}
-    distances[start_node] = 0
-    visited = set()
-    unvisited_nodes = set(range(1, len(road_network) + 1))
-    while unvisited_nodes:
-        current_node = min(unvisited_nodes, key=lambda node: distances[node])
-        unvisited_nodes.remove(current_node)
-        for neighbor in road_network[current_node - 1][0]:
-            if neighbor not in visited:
-                distance = distances[current_node] + haversineDistance(*road_network[current_node - 1][1], *road_network[neighbor - 1][1])
-                if distance < distances[neighbor]:
-                    distances[neighbor] = distance
-                    previous_nodes[neighbor] = current_node
-        visited.add(current_node)
-    path = [] 
-    current = end_node
-    total_distance = 0
-    while current is not None:
-        path.insert(0, current)
-        if previous_nodes[current] is not None:
-            total_distance += haversineDistance(*road_network[current - 1][1], *road_network[previous_nodes[current] - 1][1])
-        current = previous_nodes[current]
-    return path, total_distance
+    
+class Application:
+    def __init__(self):
+        #Initialise Flask application with template and static folders
+        self.app = Flask(__name__, template_folder='templates', static_folder='static')
+        
+        #Initialise various managers and utilities
+        self.map_manager = MapManager()
+        self.location_manager = LocationManager()
+        self.file_manager = FileManager()
+        self.distance_calculator = DistanceCalculator()
+        
+        #Initialise variables for start and destination locations
+        self.start_latitude = None
+        self.start_longitude = None
+        self.start_name = ''
+        self.destination_latitude = None
+        self.destination_longitude = None
+        self.destination_name = ''
+        
+        #Control variables for live location and speed
+        self.live_location = False
+        self.speed = 4.8
+        
+        #Result and HTML filename placeholders
+        self.result = str()
+        self.html_filename = None
+        
+        #Define map_folder and favicon_directory paths
+        self.map_folder = os.path.join(self.app.root_path, 'cached maps')  #Define map_folder here
+        self.favicon_directory = os.path.join(self.app.root_path, 'static')
+    
+    def milliseconds_since_epoch(self):
+        #Function to get current time in milliseconds since epoch
+        return int(time.time() * 1000)
 
 
-#Find what node is used from the start and end coordinates
-def coordinateOfNode(road_network, latitude, longitude):
-    for entry in road_network:
-        if entry[1] == [latitude, longitude]:
-            return road_network.index(entry)
-    return None
-
-
-def floorsAndRooms(destination_latitude, destination_longitude, result):
-    global room_numbers
-    #Getting the data for each entry
-    for entry in room_numbers:
-        coordinates = entry[0]
-        rooms_info = entry[1]
-        #Check if the current entry's coordinates match the destination
-        if coordinates[0] == destination_latitude and coordinates[1] == destination_longitude:
-            #Displaying floor and room information
-            result += "<style>"
-            result += "table {width: 100%; border-collapse: collapse;}"
-            result += "th, td {border: 1px solid #ddd; padding: 8px;}"
-            result += "tr:nth-child(even) {background-color: #f2f2f2;}"
-            result += "th {padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #4CAF50; color: white;}"
-            result += "</style>"
-            result += "<table>"
-            result += "<tr><th>floor</th><th>rooms</th></tr>"
-            for floor, rooms in rooms_info:
-                floor_number = floor[0]
-                room_numbers_str = ', '.join(map(str, rooms))
-                result += f"<tr><td>{floor_number}</td><td>{room_numbers_str}</td></tr>"
-            result += "</table>"
-    return result
-
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(favicon_directory, 'favicon.ico')
-
-
-#Function/route to get the live location
-@app.route('/get_location', methods=['POST'])
-def get_location():
-    global start_latitude, start_longitude, live_location
-    data = request.get_json()
-    user_location = data.get('location')
-    #Store the user's location coordinates in the global variables
-    start_latitude = user_location['latitude']
-    start_longitude = user_location['longitude']
-    live_location = True
-    return ('', 204)
-
-
-#Function/route to set the users start and destination positions
-@app.route('/set', methods=['POST'])
-def set_location():
-    global start_latitude, start_longitude, start_name, destination_latitude, destination_longitude, destination_name
-    #If POST request from form is sent
-    if request.method == 'POST':
-        start_name = request.form['location']
-        destination_name = request.form['destination']
-        #If live location is being used, only set destination
-        if start_name == '':
-            for destination in locations:
-                if destination[0][0] == destination_name:
-                    destination_latitude, destination_longitude = destination[1]
-                    return redirect('/Mymap')
-        #IF live location is NOT being used, set start and destination
-        else:
-            for location in locations:
-                if location[0][0] == start_name:
-                    start_latitude, start_longitude = location[1]
-                    break
-            for destination in locations:
-                if destination[0][0] == destination_name:
-                    destination_latitude, destination_longitude = destination[1]
-                    return redirect('/Mymap')
-    else:
-        return redirect('/')    #If error, break, go to home page
-
-
-#Home route
-@app.route('/')
-def home():
-    deleteOldMapFiles()
-    return render_template('home.html')
-
-
-#Location route
-@app.route('/location')
-def location():
-    deleteOldMapFiles()
-    return render_template('Geo.html', locations=locations)
-
-
-#Show map with every point route
-@app.route('/wholemap')
-def wholeMap():
-    return render_template('wholeMap.html')
-
-
-#Map route
-@app.route('/Mymap')
-def Mymap():
-    #Location
-    global html_filename, start_latitude, start_longitude, destination_latitude, destination_longitude, start_name, destination_name, live_location, speed
-    #Create a new map centred around the location
-    campus_map = folium.Map(location=[start_latitude, start_longitude], 
-                            zoom_start=15, 
-                            zoom_control=False, 
-                            max_bounds=True,
-                            control_scale=True,
-                            prefer_canvas=True,
-                            tap=False
-                            )  
-    #Function to join live location onto the map network
-    def find_closest_node(latitude, longitude):
+class MapManager:
+    def find_closest_node(self, latitude, longitude):
+        #Find the closest node in the road network based on Haversine distance
         closest_node = None
         min_distance = float('inf')
         for i, node_info in enumerate(road_network):
             node_coords = node_info[1]
-            distance = haversineDistance(latitude, longitude, node_coords[0], node_coords[1])
+            distance = web_app.distance_calculator.haversine_distance(latitude, longitude, node_coords[0], node_coords[1])
             if distance < min_distance:
                 closest_node = i + 1  #Adjust for the array index starting from 1
                 min_distance = distance
         return closest_node
 
-    if live_location == True:
-        start = find_closest_node(start_latitude, start_longitude)
-        end = coordinateOfNode(road_network, destination_latitude, destination_longitude)
-        #Adjusment for the array
-        end = end + 1
-        coords1 = [start_latitude, start_longitude]
-        coords2 = road_network[start - 1][1]
-        folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
+    def generate_map(self, start_latitude, start_longitude, destination_latitude, destination_longitude):
+        #Generate a folium map with specified parameters
+        #Initialise the campus map
+        campus_map = folium.Map(location=[start_latitude, start_longitude],
+                                zoom_start=15,
+                                zoom_control=False,
+                                max_bounds=True,
+                                control_scale=True,
+                                prefer_canvas=True,
+                                tap=False
+                                )
+
+        #Find the closest nodes for the start and destination
+        start = self.find_closest_node(start_latitude, start_longitude)
+        end = web_app.distance_calculator.coordinate_of_node(road_network, destination_latitude, destination_longitude) + 1
+
+        if web_app.live_location:
+            #Draw a blue line from the current location to the nearest road node if in live location mode
+            coords1 = [start_latitude, start_longitude]
+            coords2 = road_network[start - 1][1]
+            folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
+        else:
+            #If not in live location mode, set the start based on the road network
+            start = web_app.distance_calculator.coordinate_of_node(road_network, start_latitude, start_longitude) + 1
+
+        #Find the path and total distance using Dijkstra's algorithm
+        path, total_distance = web_app.distance_calculator.dijkstra(start, end)
+        total_distance = round(total_distance, 2)
+        total_time = round(((total_distance / web_app.speed) * 60), 1)
+        eta = datetime.now() + timedelta(minutes=total_time)
+        eta_str = eta.strftime('%H:%M:%S')
+
+        #Draw blue lines connecting nodes in the path
+        for i in range(len(path) - 1):
+            current_node = path[i]
+            next_node = path[i + 1]
+            coords1 = road_network[current_node - 1][1]
+            coords2 = road_network[next_node - 1][1]
+            folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
+
+        #Get room and floor information
+        RoomAndFloor = web_app.distance_calculator.floors_and_rooms(destination_latitude, destination_longitude, web_app.result)
+
+        #Add markers for start and destination with popups
+        folium.Marker([start_latitude, start_longitude], 
+                    popup=folium.Popup(f'<font color="#1a33f0">Your location.</font><br>{web_app.start_name}')).add_to(campus_map)
+        folium.Marker([destination_latitude, destination_longitude], 
+                    popup=folium.Popup(f'<font color="#ff000d">Your Destination.</font><br>{web_app.destination_name}<br>{RoomAndFloor}', 
+                    max_width=300)).add_to(campus_map)
+
+        #Save the map to an HTML file
+        web_app.html_filename = f'{web_app.milliseconds_since_epoch()}.html'
+        html_file_path = os.path.join(web_app.map_folder, web_app.html_filename)
+        campus_map.save(html_file_path)
+
+        #Update the navbar with distance, time, and estimated arrival information
+        navbar_file_path = os.path.join('templates', 'navbar.html')
+        with open(navbar_file_path, 'r') as navbar_file:
+            navbar_contents = navbar_file.read()
 
 
-    elif live_location == False:
-        start = coordinateOfNode(road_network, start_latitude, start_longitude)
-        end = coordinateOfNode(road_network, destination_latitude, destination_longitude)
-        #Adjusment for the array
-        start = start + 1
-        end = end + 1
-    
-    path, total_distance = dijkstra(start, end)
-    total_distance = round(total_distance, 2)    #Round total_distnace to 2 decimal places
-    total_time = round(((total_distance / speed) * 60), 1)    #Total time rounded to 1 decimal places
+        #Adding data such as distance, total time and ETA to the navbar
+        navbar_contents = navbar_contents.replace('{{ total_distance }}', f'{total_distance} km : ')
+        navbar_contents = navbar_contents.replace('{{ total_time }}', f'{total_time} minutes : ')
+        navbar_contents = navbar_contents.replace('{{ eta }}', f'ETA: {eta_str}')
+
+        #Combine navbar and map contents and save to the HTML file
+        with open(html_file_path, 'r') as map_file:
+            map_contents = map_file.read()
+            combined_contents = navbar_contents + map_contents
+        with open(html_file_path, 'w') as destination_file:
+            destination_file.write(combined_contents)
+
+        #Reset live location flag and redirect to the map display route
+        web_app.live_location = False
+        return redirect(url_for('show_map', html_filename=web_app.html_filename))
 
 
-    #Add lines to represent road connections in the shortest path
-    for i in range(len(path) - 1):
-        current_node = path[i]
-        next_node = path[i + 1]
-        coords1 = road_network[current_node - 1][1]
-        coords2 = road_network[next_node - 1][1]
-        folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
+class LocationManager:
+    def get_coordinates(self, location_name):
+        #Get the coordinates for a given location name
+        for location in locations:
+            if location[0][0] == location_name:
+                return location[1]
+        return None  #Return None if the location name is not found
 
-    #Getting floor and room numbers of destination
-    RoomAndFloor = floorsAndRooms(destination_latitude, destination_longitude, result)
 
-    #Adding markers for location and desitnation 
-    folium.Marker([start_latitude, start_longitude], popup=folium.Popup(f'<font color="#1a33f0">Your location.</font><br>{start_name}')).add_to(campus_map)
-    folium.Marker([destination_latitude, destination_longitude], popup=folium.Popup(f'<font color="#ff000d">Your Destination.</font><br>{destination_name}<br>{RoomAndFloor}', max_width=300), lazy=True).add_to(campus_map)
+class FileManager:
+    def delete_old_map_files(self):
+        #Delete map files older than 24 hours in the web_app.map_folder directory
+        #Get the current epoch time
+        current_time = time.time()
 
-    #Generate the file name
-    html_filename = f'{millisecondsSinceEpoch()}.html'
-    html_file_path = os.path.join(map_folder, html_filename)
+        #Calculate the time 24 hours ago
+        one_day_ago = current_time - 24 * 60 * 60  #24 hours ago
 
-    #Save the destination and current location to the map
-    campus_map.save(html_file_path)
+        #Iterate through files in the web_app.map_folder directory
+        for root, dirs, files in os.walk(web_app.map_folder):
+            for file in files:
+                file_path = os.path.join(root, file)
+                
+                #Get the creation time of the file
+                file_creation_time = os.path.getctime(file_path)
+                
+                #Check if the file is older than 24 hours
+                if file_creation_time < one_day_ago:
+                    os.remove(file_path)  #Delete the file
 
-    #Adding information and navbar to the generated map
-    #Read the content of navbar.html
-    navbar_file_path = os.path.join('templates', 'navbar.html')
-    with open(navbar_file_path, 'r') as navbar_file:
-        navbar_contents = navbar_file.read()
-    #Add total distance to the navbar
-    navbar_contents = navbar_contents.replace('{{ total_distance }}', f'Distance to destination: {total_distance} km')
-    #Add total time to the navbar
-    navbar_contents = navbar_contents.replace('{{ total_time }}', f'Time to reach destination: {total_time} minutes')
 
-    #Read the content of the generated map and add navbar to the top of the generated map page
-    with open(html_file_path, 'r') as map_file:
-        map_contents = map_file.read()
-        combined_contents = navbar_contents + map_contents
-    with open(html_file_path, 'w') as destination_file:
-        destination_file.write(combined_contents)    #Save the combined content to the global_id file
-    live_location = False        #Set live_location as false for next time
-    return redirect(url_for('showMap', html_filename=html_filename))
+class DistanceCalculator:
+    def haversine_distance(self, lat1, long1, lat2, long2):
+        #Calculate the Haversine distance between two sets of latitude and longitude coordinates
+        #Convert latitude and longitude from degrees to radians
+        lat1 = math.radians(lat1)
+        long1 = math.radians(long1)
+        lat2 = math.radians(lat2)
+        long2 = math.radians(long2)
 
-@app.route('/<html_filename>')
-def showMap(html_filename):
-    deleteOldMapFiles()
-    return send_file(os.path.join(map_folder, f'{html_filename}'))
+        #Calculate the differences in latitude and longitude
+        delta_lat = lat2 - lat1
+        delta_long = long2 - long1
+
+        #Haversine formula to calculate the distance
+        a = math.sin(delta_lat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(delta_long / 2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+        #Radius of the Earth in kilometers
+        radius_of_earth = 6371
+
+        #Calculate the final distance
+        distance = radius_of_earth * c
+
+        return distance
+
+    def dijkstra(self, start_node, end_node):
+        #Dijkstra's algorithm to find the shortest path between the start_node and end_node
+        #Initialize distances and previous_nodes dictionaries
+        distances = {node: float('inf') for node in range(1, len(road_network) + 1)}
+        previous_nodes = {node: None for node in range(1, len(road_network) + 1)}
+
+        #Set distance for the start_node to 0
+        distances[start_node] = 0
+
+        #Initialize visited and unvisited nodes sets
+        visited = set()
+        unvisited_nodes = set(range(1, len(road_network) + 1))
+
+        #Main loop for Dijkstra's algorithm
+        while unvisited_nodes:
+            current_node = min(unvisited_nodes, key=lambda node: distances[node])
+            unvisited_nodes.remove(current_node)
+
+            #Update distances and previous_nodes for neighboring nodes
+            for neighbor in road_network[current_node - 1][0]:
+                if neighbor not in visited:
+                    distance = distances[current_node] + self.haversine_distance(*road_network[current_node - 1][1], *road_network[neighbor - 1][1])
+                    if distance < distances[neighbor]:
+                        distances[neighbor] = distance
+                        previous_nodes[neighbor] = current_node
+            visited.add(current_node)
+
+        #Reconstruct the path and calculate total_distance
+        path = []
+        current = end_node
+        total_distance = 0
+        while current is not None:
+            path.insert(0, current)
+            if previous_nodes[current] is not None:
+                total_distance += self.haversine_distance(*road_network[current - 1][1], *road_network[previous_nodes[current] - 1][1])
+            current = previous_nodes[current]
+
+        return path, total_distance
+
+    def coordinate_of_node(self, road_network, latitude, longitude):
+        #Find the index of the node in the road network with the specified coordinates
+        for entry in road_network:
+            if entry[1] == [latitude, longitude]:
+                return road_network.index(entry)
+        return None  #Return None if the coordinates are not found
+
+    def floors_and_rooms(self, destination_latitude, destination_longitude, result):
+        #Find and format floor and room information for a given destination coordinates
+
+        for entry in room_numbers:
+            coordinates = entry[0]
+            rooms_info = entry[1]
+
+            #Check if the coordinates match the destination coordinates
+            if coordinates[0] == destination_latitude and coordinates[1] == destination_longitude:
+                #Add styling for a table to the result string
+                result += "<style>"
+                result += ".scrollable-popup {max-height: 200px; overflow-y: auto;}"
+                result += "table {width: 100%; border-collapse: collapse;}"
+                result += "th, td {border: 1px solid #ddd; padding: 8px;}"
+                result += "tr:nth-child(even) {background-color: #f2f2f2;}"
+                result += "th {padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #4CAF50; color: white;}"
+                result += "</style>"
+                #Create a scrollable container and a table with floor and room information
+                result += "<div class='scrollable-popup'>"
+                result += "<table>"
+                result += "<tr><th>floor</th><th>rooms</th></tr>"
+                for floor, rooms in rooms_info:
+                    floor_number = floor[0]
+                    room_numbers_str = ', '.join(map(str, rooms))
+                    result += f"<tr><td>{floor_number}</td><td>{room_numbers_str}</td></tr>"
+                result += "</table>"
+                result += "</div>"
+
+        return result
+
+
+#Instantiate the Application class
+web_app = Application()
+app = web_app.app
+
+
+#Route for favicon
+@web_app.app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(web_app.favicon_directory, 'favicon.ico')
+
+
+#Route to get the live location
+@web_app.app.route('/get_location', methods=['POST'])
+def get_location():
+    data = request.get_json()
+    user_location = data.get('location')
+    web_app.start_latitude = user_location['latitude']
+    web_app.start_longitude = user_location['longitude']
+    web_app.live_location = True
+    return ('', 204)
+
+
+#Route to set the users start and destination positions
+@web_app.app.route('/set', methods=['POST'])
+def set_location():
+    web_app.start_name = request.form['location']
+    web_app.destination_name = request.form['destination']
+
+    if web_app.start_name == '':
+        destination_coordinates = web_app.location_manager.get_coordinates(web_app.destination_name)
+        web_app.destination_latitude, web_app.destination_longitude = destination_coordinates
+        return redirect('/Mymap')
+    else:
+        start_coordinates = web_app.location_manager.get_coordinates(web_app.start_name)
+        web_app.start_latitude, web_app.start_longitude = start_coordinates
+
+        destination_coordinates = web_app.location_manager.get_coordinates(web_app.destination_name)
+        web_app.destination_latitude, web_app.destination_longitude = destination_coordinates
+
+        return redirect('/Mymap')
+
+
+#Home route
+@web_app.app.route('/')
+def home():
+    web_app.file_manager.delete_old_map_files()
+    return render_template('home.html')
+
+
+#Location route
+@web_app.app.route('/location')
+def location():
+    return render_template('Geo.html', locations=locations)
+
+
+
+#Show map with every point route
+@web_app.app.route('/wholemap')
+def whole_map():
+    return render_template('wholeMap.html')
+
+
+#Map route
+@web_app.app.route('/Mymap')
+def my_map():
+    web_app.map_manager.generate_map(web_app.start_latitude, web_app.start_longitude, web_app.destination_latitude, web_app.destination_longitude)
+    return redirect(url_for('show_map', html_filename=web_app.html_filename))
+
+
+#Route to show the map
+@web_app.app.route('/<html_filename>')
+def show_map(html_filename):
+    web_app.file_manager.delete_old_map_files()
+    return send_file(os.path.join(web_app.map_folder, f'{html_filename}'))
 
 
 if __name__ == '__main__':
-    #Start the Flask app 
-    app.run(host='0.0.0.0', port=443, debug=True, ssl_context=("cert.pem", "privkey.pem"))
-
+    web_app.app.run(host='0.0.0.0', port=443, debug=True, ssl_context=("cert.pem", "privkey.pem"))
