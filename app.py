@@ -375,15 +375,15 @@ class MapManager:
 			coords2 = road_network[start - 1][1]
 			folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
 			#Find distance from live position to nearest node
-			line_distance = web_app.distance_calculator.haversine_formula(start_latitude, start_longitude, coords2[0], coords2[1])
+			live_distance = web_app.distance_calculator.haversine_formula(start_latitude, start_longitude, coords2[0], coords2[1])
 		else:
 			#If not in live location mode, set the start based on the road network
 			start = web_app.distance_calculator.coordinate_of_node(road_network, start_latitude, start_longitude) + 1
-			line_distance = 0
+			live_distance = 0
    
 		#Find the path and total distance using dijkstras_algorithm's algorithm
 		path, total_distance = web_app.distance_calculator.dijkstras_algorithm(start, end)
-		total_distance = total_distance + line_distance
+		total_distance = total_distance + live_distance
 		total_distance = round(total_distance, 2)
 		total_time = round(((total_distance / web_app.speed) * 60), 1)
 		eta = datetime.now() + timedelta(minutes=total_time)
