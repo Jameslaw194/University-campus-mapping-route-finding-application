@@ -307,6 +307,7 @@ room_numbers = [
 	]
 
 
+#Constructor Class
 class Application:
 	def __init__(self):
 		#Initialise Flask application with template and static folders
