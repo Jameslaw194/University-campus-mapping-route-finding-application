@@ -7,6 +7,7 @@ import time
 import math
 
 
+#All building and department locations
 locations = [
 	{'breaker': '----Locations----'},
 	[['Academic and Student Affairs'], [54.58437403687632, -5.933474677076396]],
@@ -97,6 +98,7 @@ locations = [
 ]
 
 
+#Main road adjacency liist
 road_network = [
 	[[82, 6, 15, 16, 17], [54.58319268940053, -5.936868755846738]],#1
 	[[82, 3, 158], [54.58062727493786, -5.9384974272965305]],#2
@@ -207,8 +209,8 @@ road_network = [
 	[[104, 106], [54.605296068720044, -5.915860082772903]],#105
 	[[105, 107], [54.60435546753285, -5.913424185911486]],#106
 	[[106, 108], [54.613624547044715, -5.900027458522031]],#107
+	#BUILDINGS
 	[[107], [54.614029465909745, -5.89993074581833]],#108 #The Institute of Electronics, Communications and Information Technology (Titanic Quarter)
-	#BUILDINGS ETC//
 	[[80], [54.57896703662099, -5.936502371659701]],#109 Biological Sciences
 	[[26, 141], [54.58450009692936, -5.935297021020948]],#110 Welcome Centre
 	[[112, 130, 131], [54.58437403687632, -5.933474677076396]],#Academic and Student Affairs #111
@@ -295,6 +297,7 @@ road_network = [
 ]
 
 
+#Room numbers and floors for SARC building
 room_numbers = [
 	[[54.580530653927234, -5.93777668187978], [[[-1], ['LG008:Sonic Lab Door', 'LG018:Kitchen', 'LG021:Surround 1 outer', 'LG022:Surround 1 inner', 'LG023:VR Edit Suite', 'LG024:Studio 3', 'LG025:Studio 2', 'LG026:Studio 1', 'LG029:Surround 2', 'LG030:Broadcast A', 'LG031:Broacast B', 'LG032:Broadcast Studio']],
 	 [[0], ['0G007:Kitchen', '0G023:MultiMedia', '0G008:Sonic Lab', '0G012:School Office', '0G013:Equipment Store', '0G019:Michael Alcorn', '0G020:Aisling McGeown', '0G021:Craig Jackson', '0G022:Jonny McGuinness', '0G025:Small store', '0G028a:Instrument Store', '0G029:Computer Suite', '0G030 a:Side Door to Lab', '0G030 c:Beside Control Room', '0G031:Control Room']],
@@ -303,7 +306,7 @@ room_numbers = [
 	 [[3],['03007:Kitchen','03009:Store','03011:Door to offices','03012:John D','03013:Gabriela M','03014:Dons','03015:Frank D','03016:Elena C','3018A:Empty Office/Storage','3018B:Edit Suite','03020:Computer Overflow Lab','03021:Computer suite','03022:3rd Floor Back Stairs']]]]
 	]
 
-	
+
 class Application:
 	def __init__(self):
 		#Initialise Flask application with template and static folders
@@ -381,10 +384,11 @@ class MapManager:
 			start = web_app.distance_calculator.coordinate_of_node(road_network, start_latitude, start_longitude) + 1
 			line_distance = 0
    
-		#Find the path and total distance using dijkstras_algorithm's algorithm
+		#Calculate the path and total distance using dijkstras_algorithm's
 		path, total_distance = web_app.distance_calculator.dijkstras_algorithm(start, end)
 		total_distance = total_distance + line_distance
 		total_distance = round(total_distance, 2)
+		#Calculate time to walk and estimated time or arrival
 		total_time = round(((total_distance / web_app.speed) * 60), 1)
 		eta = datetime.now() + timedelta(minutes=total_time)
 		eta_str = eta.strftime('%H:%M')
@@ -407,7 +411,7 @@ class MapManager:
 					popup=folium.Popup(f'<font color="#ff000d">Your Destination:</font><br>{web_app.destination_name}<br>{RoomAndFloor}', 
 					max_width=300)).add_to(campus_map)
 
-		#Save the map to an HTML file
+		#Save the map to a HTML file
 		web_app.html_filename = f'{web_app.milliseconds_since_epoch()}.html'
 		html_file_path = os.path.join(web_app.map_folder, web_app.html_filename)
 		campus_map.save(html_file_path)
