@@ -98,7 +98,7 @@ locations = [
 ]
 
 
-#Main road adjacency liist
+#Main road adjacency list
 road_network = [
 	[[82, 6, 15, 16, 17], [54.58319268940053, -5.936868755846738]],#1
 	[[82, 3, 158], [54.58062727493786, -5.9384974272965305]],#2
@@ -335,8 +335,8 @@ class Application:
 		self.html_filename = None
 		
 		#Define map_folder and favicon_directory paths
-		self.map_folder = os.path.join(self.app.root_path, 'cached maps') #Define map_folder here
-		self.favicon_directory = os.path.join(self.app.root_path, 'static')
+		self.map_folder = os.path.join(self.app.root_path, 'cached maps') #Folder for end users maps
+		self.favicon_directory = os.path.join(self.app.root_path, 'static') #favicon location
 	
 	def milliseconds_since_epoch(self):
 		#Function to get current time in milliseconds since epoch
