@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="static/styles.css" />
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="topnav">
+			<a href="/">Home</a>
+			<a href="/location">Plot your Route</a>
+			<a href="/wholemap">Show the Map</a>
+		</div>
+		<div class="infonav">
+			<a>Distance: 0.01 km :  Time: 0.1 min :  ETA: 14:07</a>
+		</div>
+	</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ce7775648d5363cc63a726b187e27b3e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ce7775648d5363cc63a726b187e27b3e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ce7775648d5363cc63a726b187e27b3e = L.map(
+                "map_ce7775648d5363cc63a726b187e27b3e",
+                {
+                    center: [54.58437403687632, -5.933474677076396],
+                    crs: L.CRS.EPSG3857,
+                    maxBounds: [[-90, -180], [90, 180]],
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: true,
+                    tap: false,
+                }
+            );
+            L.control.scale().addTo(map_ce7775648d5363cc63a726b187e27b3e);
+
+            
+
+        
+    
+            var tile_layer_28c4209ea6a35e8b917d988ec290aa94 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+                tile_layer_28c4209ea6a35e8b917d988ec290aa94.addTo(map_ce7775648d5363cc63a726b187e27b3e);
+    
+            var poly_line_bdf208d35d3e487ebdcf86fd6cf79438 = L.polyline(
+                [[54.58437403687632, -5.933474677076396], [54.58435783719249, -5.933604059531754]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_ce7775648d5363cc63a726b187e27b3e);
+        
+    
+            var marker_9b5ead583025ab15132afe7138cd0e99 = L.marker(
+                [54.58437403687632, -5.933474677076396],
+                {}
+            ).addTo(map_ce7775648d5363cc63a726b187e27b3e);
+        
+    
+        var popup_1f61c9b615cefefd485d433f41f6addc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2bb89979d62e49851ca88dd5a796b55b = $(`<div id="html_2bb89979d62e49851ca88dd5a796b55b" style="width: 100.0%; height: 100.0%;"><font color="#1a33f0">Your location:</font><br>Academic and Student Affairs</div>`)[0];
+                popup_1f61c9b615cefefd485d433f41f6addc.setContent(html_2bb89979d62e49851ca88dd5a796b55b);
+            
+        
+
+        marker_9b5ead583025ab15132afe7138cd0e99.bindPopup(popup_1f61c9b615cefefd485d433f41f6addc)
+        ;
+
+        
+    
+    
+            var marker_1cf4a3c65d6f4ee9cf7cc24b7bbf763e = L.marker(
+                [54.58435783719249, -5.933604059531754],
+                {}
+            ).addTo(map_ce7775648d5363cc63a726b187e27b3e);
+        
+    
+        var popup_6ac5e9b2436d80ab40c959b4064d275e = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_e17bde1112dd33989213ce04d4df4452 = $(`<div id="html_e17bde1112dd33989213ce04d4df4452" style="width: 100.0%; height: 100.0%;"><font color="#ff000d">Your Destination:</font><br>Estates<br></div>`)[0];
+                popup_6ac5e9b2436d80ab40c959b4064d275e.setContent(html_e17bde1112dd33989213ce04d4df4452);
+            
+        
+
+        marker_1cf4a3c65d6f4ee9cf7cc24b7bbf763e.bindPopup(popup_6ac5e9b2436d80ab40c959b4064d275e)
+        ;
+
+        
+    
+</script>
+</html>
