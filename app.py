@@ -213,7 +213,7 @@ road_network = [
 	[[107], [54.614029465909745, -5.89993074581833]],#108 #The Institute of Electronics, Communications and Information Technology (Titanic Quarter)
 	[[80], [54.57896703662099, -5.936502371659701]],#109 Biological Sciences
 	[[26, 141, 133, 139], [54.58450009692936, -5.935297021020948]],#110 Welcome Centre
-	[[112, 130, 131, 149], [54.58437403687632, -5.933474677076396]],#Academic and Student Affairs #111
+	[[112, 130, 131], [54.58437403687632, -5.933474677076396]],#Academic and Student Affairs #111
 	[[97, 111], [54.58452736772177, -5.93327688374742]],#Administration Building #112
 	[[9, 177], [54.58007433547152, -5.935592059498496]],#Ashby Building #113
 	[[123], [54.584822375588544, -5.935087425538025]],#Canada Room/Council Chamber #114
@@ -251,7 +251,7 @@ road_network = [
 	[[143, 160], [54.58432032316817, -5.9350927899592785]],#Naughton Gallery at Queens #146
 	[[150, 176], [54.58379684096096, -5.934594062197901]],#New Physics Building #147
 	[[187], [54.58042280920047, -5.93707170772201]],#Northern Ireland Technology Centre (NITC) #148
-	[[80, 138, 111], [54.57857604350641, -5.937865257134043]],#Occupational Health and Safety Services #149
+	[[80, 138], [54.578523068300605, -5.937947913574511]],#Occupational Health and Safety Services #149
 	[[159, 147], [54.58376844134731, -5.9348406585386035]],#Old Physics Building #150
 	[[97], [54.58470105949851, -5.9334766034009006]],#Peter Froggatt Centre (PFC) #151
 	[[76, 181], [54.586329469218455, -5.942700637129458]],#Pharmacy Building #152 
