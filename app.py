@@ -37,7 +37,7 @@ locations = [
 	[['Health Sciences Building'], [54.58660702320403, -5.946585803378913]],
 	[['Human Resources'], [54.58419837710644, -5.933606314991591]],
 	[['Information Services'], [54.58380395735038, -5.932364910656428]],
-	[['Institute of Professional Legal Studies (IPLS)'], [54.579023995281226, -5.9377396107889195]],
+	[['Institute of Professional Legal Studies (IPLS)'], [54.57890534318588, -5.9378337586596714]],
 	[['International Office'], [54.584436899364654, -5.935141069712947]],
 	[['INTO Queens'], [54.57930335140277, -5.93808936622602]],
 	[['Lanyon Building'], [54.58448404740997, -5.935159301057353]],
@@ -242,7 +242,7 @@ road_network = [
 	[[37, 39, 162], [54.58380395735038, -5.932364910656428]],#Information Services #137
 	[[140, 149], [54.57890534318588, -5.9378337586596714]],#Institute of Professional Legal Studies (IPLS) #138
 	[[110, 141, 143], [54.584436899364654, -5.935141069712947]],#International Office #139
-	[[4, 138], [54.57937213347253, -5.938389753728512]],#INTO Queens #140
+	[[4, 138], [54.57930335140277, -5.93808936622602]],#INTO Queens #140
 	[[110, 133, 139], [54.58448404740997, -5.935159301057353]],#Lanyon Building #141
 	[[32], [54.584731476918904, -5.934128091650716]],#Main Site Tower #142
 	[[139, 146, 164], [54.58438560588251, -5.935194713887871]],#Marketing, Recruitment,Communications and Internationalisation #143
@@ -263,7 +263,7 @@ road_network = [
 	[[2, 187], [54.580530653927234, -5.93777668187978]],#Sonic Arts Research Centre (SARC) #158
 	[[25, 165, 150], [54.58375784064992, -5.935614140012404]],#South Dining Hall #159
 	[[164, 146, 155], [54.58421618149038, -5.935216171561602]],#Student Plus #160
-	[[24], [54.58460117896461, -5.936993006949371]],#One Elmwood, Student Centre and Students Union #161
+	[[24], [54.58455626384715, -5.937126707190225]],#One Elmwood, Student Centre and Students Union #161 
 	[[38, 137], [54.5838034291948, -5.932109316417613]],#The McClay Library #162
 	[[94], [54.58398355243926, -5.937445814805631]],#University Health Centre #163
 	[[143, 160], [54.58433897538085, -5.93529395561524]],#Vice-Chancellors Office #164
