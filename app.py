@@ -199,7 +199,7 @@ road_network = [
 	[[32, 134, 97], [54.584831619591824, -5.933181797200551]],#96
 	[[96, 35, 112, 151], [54.584676186104666, -5.933128153025629]],#97
 	[[43, 50, 168], [54.586386012961114, -5.93574750481616]],#98
-	#Titanic
+	#Titanic Quarter
 	[[61, 100], [54.593509457526835, -5.931132178157443]],#99
 	[[99, 101], [54.595962004668316, -5.93139770330602]],#100
 	[[100, 102], [54.59637507449447, -5.921317878608474]],#101
@@ -209,8 +209,8 @@ road_network = [
 	[[104, 106], [54.605296068720044, -5.915860082772903]],#105
 	[[105, 107], [54.60435546753285, -5.913424185911486]],#106
 	[[106, 108], [54.613624547044715, -5.900027458522031]],#107
-	#BUILDINGS
 	[[107], [54.614029465909745, -5.89993074581833]],#108 #The Institute of Electronics, Communications and Information Technology (Titanic Quarter)
+	#All other buildings
 	[[80], [54.57896703662099, -5.936502371659701]],#109 Biological Sciences
 	[[26, 141, 133, 139], [54.58450009692936, -5.935297021020948]],#110 Welcome Centre
 	[[112, 130, 131], [54.58437403687632, -5.933474677076396]],#Academic and Student Affairs #111
@@ -317,7 +317,7 @@ class Application:
 		self.map_manager = MapManager()
 		self.location_manager = LocationManager()
 		self.file_manager = FileManager()
-		self.distance_calculator = DistanceCalculator()
+		self.path_calculation = PathCalculation()
 		
 		#Initialise variables for start and destination locations
 		self.start_latitude = None
@@ -336,8 +336,10 @@ class Application:
 		self.html_filename = None
 		
 		#Define map_folder and favicon_directory paths
-		self.map_folder = os.path.join(self.app.root_path, 'cached maps') #Folder for end users maps
-		self.favicon_directory = os.path.join(self.app.root_path, 'static') #favicon location
+		#Folder for end users maps
+		self.map_folder = os.path.join(self.app.root_path, 'cached maps')
+		#Favicon image location
+		self.favicon_directory = os.path.join(self.app.root_path, 'static')
 	
 	def milliseconds_since_epoch(self):
 		#Function to get current time in milliseconds since epoch
@@ -351,9 +353,10 @@ class MapManager:
 		min_distance = float('inf')
 		for i, node_info in enumerate(road_network):
 			node_coords = node_info[1]
-			distance = web_app.distance_calculator.haversine_formula(latitude, longitude, node_coords[0], node_coords[1])
+			distance = web_app.path_calculation.haversine_formula(latitude, longitude, node_coords[0], node_coords[1])
 			if distance < min_distance:
-				closest_node = i + 1 #Adjust for the array index starting from 1
+				#Adjust for the array index starting from 1
+				closest_node = i + 1
 				min_distance = distance
 		return closest_node
 
@@ -371,7 +374,7 @@ class MapManager:
 
 		#Find the closest nodes for the start and destination
 		start = self.find_closest_node(start_latitude, start_longitude)
-		destination = web_app.distance_calculator.coordinate_of_node(road_network, destination_latitude, destination_longitude) + 1
+		destination = web_app.path_calculation.coordinate_of_node(road_network, destination_latitude, destination_longitude) + 1
 
 		if web_app.live_location:
 			#Draw a blue line from the current location to the nearest road node if in live location mode
@@ -379,14 +382,14 @@ class MapManager:
 			coords2 = road_network[start - 1][1]
 			folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
 			#Find distance from live position to nearest node
-			line_distance = web_app.distance_calculator.haversine_formula(start_latitude, start_longitude, coords2[0], coords2[1])
+			line_distance = web_app.path_calculation.haversine_formula(start_latitude, start_longitude, coords2[0], coords2[1])
 		else:
 			#If not in live location mode, set the start based on the road network
-			start = web_app.distance_calculator.coordinate_of_node(road_network, start_latitude, start_longitude) + 1
+			start = web_app.path_calculation.coordinate_of_node(road_network, start_latitude, start_longitude) + 1
 			line_distance = 0
    
 		#Calculate the path and total distance using dijkstras_algorithm's
-		path, total_distance = web_app.distance_calculator.dijkstras_algorithm(start, destination)
+		path, total_distance = web_app.path_calculation.dijkstras_algorithm(start, destination)
 		total_distance = total_distance + line_distance
 		total_distance = round(total_distance, 2)
 		#Calculate time to walk and estimated time or arrival
@@ -403,7 +406,7 @@ class MapManager:
 			folium.PolyLine(locations=[coords1, coords2], color='blue').add_to(campus_map)
 
 		#Get room and floor information
-		RoomAndFloor = web_app.distance_calculator.floors_and_rooms(destination_latitude, destination_longitude, web_app.result)
+		RoomAndFloor = web_app.path_calculation.floors_and_rooms(destination_latitude, destination_longitude, web_app.result)
 
 		#Add markers for start and destination with popups
 		folium.Marker([start_latitude, start_longitude], 
@@ -446,7 +449,8 @@ class LocationManager:
 		for location in locations:
 			if isinstance(location, list) and location[0][0] == location_name:
 				return location[1]
-		return None #Return None if the location name is not found
+		#Return None if the location name is not found
+		return None
 
 
 class FileManager:
@@ -471,7 +475,7 @@ class FileManager:
 					os.remove(file_path) #Delete the file
 
 
-class DistanceCalculator:
+class PathCalculation:
 	def haversine_formula(self, lat1, long1, lat2, long2):
 		#Calculate the Haversine distance between two sets of latitude and longitude coordinates
 		#Convert latitude and longitude from degrees to radians
@@ -497,27 +501,34 @@ class DistanceCalculator:
 		return distance
 
 	def dijkstras_algorithm(self, start_node, end_node):
-		#dijkstras_algorithm's algorithm to find the shortest path between the start_node and end_node
-		#Initialize distances and previous_nodes dictionaries
+		#Dijkstra's algorithm to find the shortest path between the start_node and end_node
+		#Initialise distances and previous_nodes dictionaries
+		#distances: holds the shortest distance from start_node to every other node
+		#previous_nodes: holds the previous node in the optimal path from start_node
 		distances = {node: float('inf') for node in range(1, len(road_network) + 1)}
 		previous_nodes = {node: None for node in range(1, len(road_network) + 1)}
 
 		#Set distance for the start_node to 0
 		distances[start_node] = 0
 
-		#Initialize visited and unvisited nodes sets
+		#Initialise visited and unvisited nodes sets
+		#visited: nodes that have been visited and processed
+		#unvisited_nodes: nodes that have been seen but not processed
 		visited = set()
 		unvisited_nodes = set(range(1, len(road_network) + 1))
 
-		#Main loop for dijkstras_algorithm's algorithm
+		#Main loop for Dijkstra's algorithm
 		while unvisited_nodes:
+			#Select the unvisited node with the smallest distance
 			current_node = min(unvisited_nodes, key=lambda node: distances[node])
 			unvisited_nodes.remove(current_node)
 
 			#Update distances and previous_nodes for neighboring nodes
 			for neighbor in road_network[current_node - 1][0]:
 				if neighbor not in visited:
+					#Calculate the distance to the neighbor through the current_node
 					distance = distances[current_node] + self.haversine_formula(*road_network[current_node - 1][1], *road_network[neighbor - 1][1])
+					#If the calculated distance is less than the known distance, update the distance and previous node
 					if distance < distances[neighbor]:
 						distances[neighbor] = distance
 						previous_nodes[neighbor] = current_node
@@ -529,6 +540,7 @@ class DistanceCalculator:
 		total_distance = 0
 		while current is not None:
 			path.insert(0, current)
+			#Calculate the total distance by summing up the distances between each pair of nodes in the path
 			if previous_nodes[current] is not None:
 				total_distance += self.haversine_formula(*road_network[current - 1][1], *road_network[previous_nodes[current] - 1][1])
 			current = previous_nodes[current]
@@ -540,7 +552,8 @@ class DistanceCalculator:
 		for entry in road_network:
 			if entry[1] == [latitude, longitude]:
 				return road_network.index(entry)
-		return None #Return None if the coordinates are not found
+		#Return None if the coordinates are not found
+		return None
 
 	def floors_and_rooms(self, destination_latitude, destination_longitude, result):
 		#Find and format floor and room information for a given destination coordinates
