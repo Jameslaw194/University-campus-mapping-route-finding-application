@@ -34,27 +34,41 @@
 
 				<div class="form-group">
 					<label for="location-select">Or select your start location:</label>
-					<select	name="location"	class="form-control" id="location-select">
-						{% for entry in locations %} {% if entry.breaker %}
-						<optgroup label="{{ entry.breaker }}"></optgroup>
-						{% else %}
-						<option value="{{ entry[0][0] }}">
-						{{ entry[0][0] }}
-						</option>
-						{% endif %} {% endfor %}
+					<!-- Select element for choosing the starting location -->
+					<select name="location" class="form-control" id="location-select">
+					    <!-- Loop through each entry in the locations list -->
+					    {% for entry in locations %}
+					        <!-- Check if the entry has a 'breaker' property, which indicates a group label -->
+					        {% if entry.breaker %}
+					            <!-- Create an optgroup with the label specified by the 'breaker' property -->
+					            <optgroup label="{{ entry.breaker }}"></optgroup>
+					        {% else %}
+					            <!-- If there's no 'breaker', create an option with the value and display text from the first item in the entry tuple -->
+					            <option value="{{ entry[0][0] }}">
+					                {{ entry[0][0] }}
+					            </option>
+					        {% endif %}
+					    {% endfor %}
 					</select>
 				</div>
 				<br />
 				<div class="form-group">
 					<label for="location-select">Select your end location:</label>
+					<!-- Select element for choosing the destination location -->
 					<select name="destination" class="form-control" id="destination-select">
-						{% for entry in locations %} {% if entry.breaker %}
-						<optgroup label="{{ entry.breaker }}"></optgroup>
-						{% else %}
-						<option value="{{ entry[0][0] }}">
-						{{ entry[0][0] }}
-						</option>
-						{% endif %} {% endfor %}
+					    <!-- Loop through each entry in the locations list -->
+					    {% for entry in locations %}
+					        <!-- Check if the entry has a 'breaker' property, which indicates a group label -->
+					        {% if entry.breaker %}
+					            <!-- Create an optgroup with the label specified by the 'breaker' property -->
+					            <optgroup label="{{ entry.breaker }}"></optgroup>
+					        {% else %}
+					            <!-- If there's no 'breaker', create an option with the value and display text from the first item in the entry tuple -->
+					            <option value="{{ entry[0][0] }}">
+					                {{ entry[0][0] }}
+					            </option>
+					        {% endif %}
+					    {% endfor %}
 					</select>
 				</div>
 
