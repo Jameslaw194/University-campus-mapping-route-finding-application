@@ -68,7 +68,7 @@ locations = [
 	[['Welcome Centre'], [54.58450009692936, -5.935297021020948]],
 	[['Whitla Hall'], [54.58371597203839, -5.9360391443710725]],
 	[['Whitla Medical Building'], [54.5859453835362, -5.9435628928809185]],
-	[['Wellcome-Wolfson Institute for Experimental Medicine'], [54.5861396452996, -5.944647615604617]],
+	[['Welcome-Wolfson Institute for Experimental Medicine'], [54.5861396452996, -5.944647615604617]],
 	{'breaker': '----Faculty Offices----'},
 	[['Arts, Humanities and Social Sciences'], [54.58629381455676, -5.935567924057082]],
 	[['Engineering and Physical Sciences'], [54.58242405458074, -5.937056795100541]],
