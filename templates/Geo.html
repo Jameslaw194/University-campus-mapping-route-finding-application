@@ -141,8 +141,8 @@
 
 				if (useLiveLocation) {
 					//If live location is selected, set a specific value for the location and submit the destination form only
-					getLiveLocation();
 					locationSelect.value = "";
+					getLiveLocation();
 					destinationSelect.form.submit();
 				} else {
 					//If live location is not selected, submit both location and destination forms
