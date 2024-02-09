@@ -140,17 +140,17 @@
 				var destinationSelect =	document.getElementById("destination-select");
 
 				if (useLiveLocation) {
-					// If live location is selected, set a specific value for the location and submit the destination form only
+					//If live location is selected, set a specific value for the location and submit the destination form only
 					locationSelect.value = "";
 					getLiveLocation();
 					setTimeout(function() {
 						destinationSelect.form.submit();
-					},  500); // Delay of  0.5 seconds (500 milliseconds)
+					},  500); //Delay of  0.5 seconds (500 milliseconds)
 				} else {
-					// If live location is not selected, submit both location and destination forms
+					//If live location is not selected, submit both location and destination forms
 					setTimeout(function() {
 						locationSelect.form.submit();
-					},  500); // Delay of  0.5 seconds (500 milliseconds)
+					},  500); //Delay of  0.5 seconds (500 milliseconds)
 				}
 			}
 		</script>
