@@ -582,7 +582,7 @@ class PathCalculation:
 					result += f"<tr><td>{floor_number}</td><td>{room_numbers_str}</td></tr>"
 				result += "</table>"
 				result += "</div>"
-
+		#Return the rooms and floors table
 		return result
 
 
@@ -594,6 +594,7 @@ app = web_app.app
 #Route for favicon
 @web_app.app.route('/favicon.ico')
 def favicon():
+    #Deliver favicon.ico from the web app's favicon directory
 	return send_from_directory(web_app.favicon_directory, 'favicon.ico')
 
 
@@ -605,6 +606,7 @@ def get_location():
 	web_app.start_latitude = user_location['latitude']
 	web_app.start_longitude = user_location['longitude']
 	web_app.live_location = True
+	# Respond with a 204 no content status
 	return ('', 204)
 
 
@@ -613,18 +615,20 @@ def get_location():
 def set_location():
 	web_app.start_name = request.form['location']
 	web_app.destination_name = request.form['destination']
-
+	#If live location is being used
 	if web_app.start_name == '':
 		destination_coordinates = web_app.location_manager.get_coordinates(web_app.destination_name)
 		web_app.destination_latitude, web_app.destination_longitude = destination_coordinates
+		# Redirect to the 'Mymap' route
 		return redirect('/Mymap')
+	#If live location is not being used
 	else:
 		start_coordinates = web_app.location_manager.get_coordinates(web_app.start_name)
 		web_app.start_latitude, web_app.start_longitude = start_coordinates
 
 		destination_coordinates = web_app.location_manager.get_coordinates(web_app.destination_name)
 		web_app.destination_latitude, web_app.destination_longitude = destination_coordinates
-
+		# Redirect to the 'Mymap' route
 		return redirect('/Mymap')
 
 
@@ -632,18 +636,21 @@ def set_location():
 @web_app.app.route('/')
 def home():
 	web_app.file_manager.delete_old_map_files()
+	# Render and return the 'home.html' template
 	return render_template('home.html')
 
 
 #Location route
 @web_app.app.route('/location')
 def location():
+	# Render 'Geo.html' template with 'locations' data
 	return render_template('Geo.html', locations=locations)
 
 
 #Show map with every point route
 @web_app.app.route('/wholemap')
 def whole_map():
+    # Render and return the 'wholeMap' template
 	return render_template('wholeMap.html')
 
 
@@ -651,6 +658,7 @@ def whole_map():
 @web_app.app.route('/Mymap')
 def my_map():
 	web_app.map_manager.generate_map(web_app.start_latitude, web_app.start_longitude, web_app.destination_latitude, web_app.destination_longitude)
+	# Redirect to the 'show_map' route with the specified HTML filename
 	return redirect(url_for('show_map', html_filename=web_app.html_filename))
 
 
@@ -658,6 +666,7 @@ def my_map():
 @web_app.app.route('/<html_filename>')
 def show_map(html_filename):
 	web_app.file_manager.delete_old_map_files()
+	# Send the specified HTML file from the web app's map folder
 	return send_file(os.path.join(web_app.map_folder, f'{html_filename}'))
 
 
@@ -676,5 +685,6 @@ def page_not_found(e):
 	return render_template('500.html'), 500
 
 
+#Start the Flask web app on all interfaces, with SSL enabled on port 443
 if __name__ == '__main__':
 	web_app.app.run(host='0.0.0.0', port=443, debug=True, ssl_context=("cert.pem", "privkey.pem"))

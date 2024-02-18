@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	<!--Load CSS and custom styles, and load Bootstrap-->
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,11 +9,13 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
+		<!--Navigation bar-->
 		<div class="topnav">
 			<a href="/">Home</a>
 			<a href="/location">Plot your Route</a>
 			<a href="/wholemap">Show the Map</a>
 		</div>
+		<!--Information bar-->
 		<div class="infonav">
 			<a>{{ total_distance }} {{ total_time }} {{ eta }}</a>
 		</div>
