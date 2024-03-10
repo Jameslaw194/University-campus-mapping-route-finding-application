@@ -1,4 +1,4 @@
-#Import libaries
+#Import libraries
 from flask import Flask, request, render_template, send_file, redirect, send_from_directory, url_for
 from datetime import datetime, timedelta
 import folium
