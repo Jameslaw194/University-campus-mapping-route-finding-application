@@ -392,7 +392,7 @@ class MapManager:
 		path, total_distance = web_app.path_calculation.dijkstras_algorithm(start, destination)
 		total_distance = total_distance + line_distance
 		total_distance = round(total_distance, 2)
-		#Calculate time to walk and estimated time or arrival
+		#Calculate time to walk and estimated time of arrival
 		total_time = round(((total_distance / web_app.speed) * 60), 1)
 		eta = datetime.now() + timedelta(minutes=total_time)
 		eta_str = eta.strftime('%H:%M')
