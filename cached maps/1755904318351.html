@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<!--Load CSS and custom styles, and load Bootstrap-->
+	<head>
+		<title>Queens Campus Map</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="static/styles.css" />
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<!--Navigation bar-->
+		<div class="topnav">
+			<a href="/">Home</a>
+			<a href="/location">Plot your Route</a>
+			<a href="/wholemap">Show the Map</a>
+		</div>
+		<!--Information bar-->
+		<div class="infonav">
+			<a>Distance: 0.3 km :  Time: 3.8 min :  ETA: 00:15</a>
+		</div>
+	</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_954021be59eb61c7077f3d5d3ed4880f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_954021be59eb61c7077f3d5d3ed4880f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_954021be59eb61c7077f3d5d3ed4880f = L.map(
+                "map_954021be59eb61c7077f3d5d3ed4880f",
+                {
+                    center: [54.58242405458074, -5.937056795100541],
+                    crs: L.CRS.EPSG3857,
+                    maxBounds: [[-90, -180], [90, 180]],
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: true,
+                    tap: false,
+                }
+            );
+            L.control.scale().addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+
+            
+
+        
+    
+            var tile_layer_2b645e4b5544dfc63a55f9a5a4293b1e = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+                tile_layer_2b645e4b5544dfc63a55f9a5a4293b1e.addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+    
+            var poly_line_c58a5402157ad9faa67013b40231234f = L.polyline(
+                [[54.58242405458074, -5.937056795100541], [54.58187878256887, -5.937437179303816]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+            var poly_line_d3d04a8b7f3c263e566243772c9caea6 = L.polyline(
+                [[54.58187878256887, -5.937437179303816], [54.58169894475783, -5.9376482843028935]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+            var poly_line_204fa0ae0885ff38ffd76487c1e88e5f = L.polyline(
+                [[54.58169894475783, -5.9376482843028935], [54.58155448809072, -5.938094864461151]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+            var poly_line_9382b79a7a48fb2ed3d5582ac1aeb861 = L.polyline(
+                [[54.58155448809072, -5.938094864461151], [54.58062727493786, -5.9384974272965305]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+            var poly_line_847187833d090667ce56f7611c3bcd19 = L.polyline(
+                [[54.58062727493786, -5.9384974272965305], [54.580530653927234, -5.93777668187978]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+            var poly_line_a44002682527d12a8df66473121501e7 = L.polyline(
+                [[54.580530653927234, -5.93777668187978], [54.580479444858256, -5.9373473784700375]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+            var marker_6f57ef56b11374fbcc4e43bb24d5632a = L.marker(
+                [54.58242405458074, -5.937056795100541],
+                {}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+        var popup_e0400522faa351cc2c37ba6471092e11 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1529e699196758e3b339c2b96903a23c = $(`<div id="html_1529e699196758e3b339c2b96903a23c" style="width: 100.0%; height: 100.0%;"><font color="#1a33f0">Your location:</font><br>Engineering and Physical Sciences</div>`)[0];
+                popup_e0400522faa351cc2c37ba6471092e11.setContent(html_1529e699196758e3b339c2b96903a23c);
+            
+        
+
+        marker_6f57ef56b11374fbcc4e43bb24d5632a.bindPopup(popup_e0400522faa351cc2c37ba6471092e11)
+        ;
+
+        
+    
+    
+            var marker_f6a44a4847edf1d3b1e0d69a0fc0d818 = L.marker(
+                [54.580479444858256, -5.9373473784700375],
+                {}
+            ).addTo(map_954021be59eb61c7077f3d5d3ed4880f);
+        
+    
+        var popup_28301c641064aecc392fc00c2f36ede1 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_84090e57700d53eaae18ac75f59c0bf7 = $(`<div id="html_84090e57700d53eaae18ac75f59c0bf7" style="width: 100.0%; height: 100.0%;"><font color="#ff000d">Your Destination:</font><br>The Institute for Global Food Security<br></div>`)[0];
+                popup_28301c641064aecc392fc00c2f36ede1.setContent(html_84090e57700d53eaae18ac75f59c0bf7);
+            
+        
+
+        marker_f6a44a4847edf1d3b1e0d69a0fc0d818.bindPopup(popup_28301c641064aecc392fc00c2f36ede1)
+        ;
+
+        
+    
+</script>
+</html>

@@ -687,4 +687,6 @@ def page_not_found(e):
 
 #Start the Flask web app on all interfaces, with SSL enabled on port 443
 if __name__ == '__main__':
-	web_app.app.run(host='0.0.0.0', port=443, debug=True, ssl_context=("cert.pem", "privkey.pem"))
+	web_app.app.run(host='0.0.0.0', port=443, debug=True, )
+
+#ssl_context=("cert.pem", "privkey.pem")
