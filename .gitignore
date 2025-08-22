@@ -1,0 +1,6 @@
+# Ignore Python bytecode cache directories everywhere
+**/__pycache__/
+
+# Ignore all generated files in "cached maps" but keep the folder itself
+cached\ maps/*
+!cached\ maps/.gitkeep
